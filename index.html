@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <script
+      src="https://kit.fontawesome.com/7918aa0ac3.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="./basic.css">
+    <link rel="shortcut icon" type="image/ico" href="/src/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Solid App</title>
+  </head>
+  <body>
+    <div data-tauri-drag-region class="titlebar">
+      <!-- <h1>Cinesuggest</h1> -->
+      <div class="options">
+        <img src="https://www.zarla.com/images/zarla-s-1x1-2400x2400-20211126-fg64yyfhbr3mt3699xg9.png?crop=1:1,smart&width=250&dpr=2" alt="">
+        <button>Homepage</button>
+                <button>Movies</button>
+                <button>Series</button>
+                <button>My List</button>
+                
+      </div>
+      <div class="btns">
+        <div class="titlebar-button" id="titlebar-minimize">
+          <i class="fa-regular fa-window-minimize" style="color: #ffffff;"></i>
+        </div>
+        <div class="titlebar-button" id="titlebar-maximize">
+          <i class="fa-regular fa-window-maximize" style="color: #ffffff;"></i>
+        </div>
+        <div class="titlebar-button" id="titlebar-close">
+          <i class="fa-solid fa-xmark"></i>
+        </div>
+      </div>
+      
+    </div>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+
+    <script src="/src/index.jsx" type="module"></script>
+    <script src="./window.js" type="module"></script>
+  </body>
+  
+</html>

@@ -1,0 +1,68 @@
+[2] 'resources:' is not recognized as an internal or external command,
+[2] operable program or batch file.
+[3] The filename, directory name, or volume label syntax is incorrect.
+[4] '}).then' is not recognized as an internal or external command,
+[4] operable program or batch file.
+[6] 'setTimeout' is not recognized as an internal or external command,
+[6] operable program or batch file.
+[8] 'require' is not recognized as an internal or external command,
+[8] operable program or batch file.
+[9] '['tauri'' is not recognized as an internal or external command,
+[9] operable program or batch file.
+[1] [eval]:1
+[1] require('wait-on').promise({
+[1]                             
+[1] 
+[1] SyntaxError: Unexpected end of input
+[1]     at new Script (node:vm:100:7)
+[1]     at createScript (node:vm:265:10)
+[1]     at Object.runInThisContext (node:vm:313:10)
+[1]     at node:internal/process/execution:79:19
+[1]     at [eval]-wrapper:6:22
+[1]     at evalScript (node:internal/process/execution:78:60)
+[1]     at node:internal/main/eval_string:28:3
+[1] 
+[1] Node.js v18.12.1
+[10] ''dev']' is not recognized as an internal or external command,
+[10] operable program or batch file.
+[11] '{' is not recognized as an internal or external command,
+[11] operable program or batch file.
+[12] 'stdio:' is not recognized as an internal or external command,
+[12] operable program or batch file.
+[13] 'inherit' is not recognized as an internal or external command,
+[13] operable program or batch file.
+[14] '})' is not recognized as an internal or external command,
+[14] operable program or batch file.
+[15] '}' is not recognized as an internal or external command,
+[15] operable program or batch file.
+[16] '5000)' is not recognized as an internal or external command,
+[16] operable program or batch file.
+[17] '})' is not recognized as an internal or external command,
+[17] operable program or batch file.
+[5] = exited with code 0
+[7] = exited with code 0
+[2] resources: exited with code 1
+[3] ['http://localhost:3000'] exited with code 1
+[4] }).then(() exited with code 1
+[6] setTimeout(() exited with code 1
+[8] require('child_process').spawn('yarn', exited with code 1
+[9] ['tauri', exited with code 1
+[1] node -e require('wait-on').promise({ exited with code 1
+[10] 'dev'], exited with code 1
+[11] { exited with code 1
+[12] stdio: exited with code 1
+[13] inherit exited with code 1
+[14] }); exited with code 1
+[15] }, exited with code 1
+[16] 5000); exited with code 1
+[17] })  exited with code 1
+[0] 
+[0] > vite-template-solid@0.0.0 dev
+[0] > vite
+[0] 
+[0] 
+[0]   [32m[1mVITE[22m v4.3.9[39m  [2mready in [0m[1m790[22m[2m[0m ms[22m
+[0] 
+[0]   [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m3000[22m/[39m
+[0] [2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
+[0] Terminate batch job (Y/N)? npm run dev exited with code 1
