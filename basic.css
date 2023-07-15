@@ -1,11 +1,6 @@
-.tauri-title-bar:not(.fullscreen) {
-    border-radius: 10px;
-  }
-  
-
 .titlebar {
     height: 40px;
-    background: #000000d7;
+    background: #00000000;
     /* user-select: none; */
     display: flex;
     justify-content: space-between;
@@ -47,11 +42,11 @@
     width: 30px;
     height: 30px;
     object-fit: cover;
-    margin-right: 15px;
+    margin-right: 30px;
   }
 
-  .options button{
-    color: rgb(210, 210, 210);
-    margin-right: 1.5vw;
-    font-size: 0.9rem;
+  .btns button{
+    color: rgb(232, 232, 232);
+    margin-right: 4.5vw;
+    font-size: 0.8rem;
   }

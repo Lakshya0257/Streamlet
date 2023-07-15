@@ -1,0 +1,25 @@
+.section-header{
+    margin-left: 10vw;
+    margin-right: 10vw;
+    margin-top: 90px;
+    height: 10vh;
+
+    div{
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        i{
+            margin-right: 30px;
+        }
+    }
+
+    hr{
+        margin-top: 10px;
+        margin-bottom: 10px;
+        height: 5px;
+        border-top: none;
+        border-right: none;
+        border-left: none;
+        border-color: rgb(77, 77, 77);
+    }
+}

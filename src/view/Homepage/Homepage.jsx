@@ -1,4 +1,5 @@
 import './Homepage.scss'
+import Heading from '../../components/Heading/Heading';
 function Homepage(){
     return (
         <div>
@@ -11,7 +12,17 @@ function Homepage(){
                 <div className="bottom-layer"></div>
             </div>
             <div className="content">
-                
+                <div className="top-info">
+                    <p>Duration : 1h32m</p>
+                    <p>⭐ 7.8</p>
+                    <h1>Dune</h1>
+                    <p class='des'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut vel recusandae earum nulla maiores cupiditate provident reiciendis quod possimus quis dolor, ipsam minus voluptates corporis id quae iusto consectetur vitae.</p>
+                    <div className="btn">
+                        <button class='details'>Details</button>
+                        <button class='add'>+ Add List</button>
+                    </div>
+                </div>
+                <Heading></Heading>
             </div>
         </div>
     )
