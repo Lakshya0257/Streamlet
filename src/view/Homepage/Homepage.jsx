@@ -8,11 +8,11 @@ function Homepage(){
                 <img src="https://media.wired.co.uk/photos/6287be835608c17c6252fca3/3:2/pass/Best-Sci-Fi-Movies-Dune-Culture-Everett-MCDDUNE_WB002.jpg" alt="Movie1" />
             </div>
             <div class="layout">
-                <div className="top-layer">
+                <div className="top-layer" id='hpl'>
                 </div>
                 <div className="bottom-layer"></div>
             </div>
-            <div className="content">
+            <div className="content" id='hpc'>
                 <div className="top-info">
                     <p>Duration : 1h32m</p>
                     <p>⭐ 7.8</p>
@@ -24,6 +24,7 @@ function Homepage(){
                     </div>
                 </div>
                 <Heading></Heading>
+                <ContentRow></ContentRow>
                 <ContentRow></ContentRow>
             </div>
         </div>

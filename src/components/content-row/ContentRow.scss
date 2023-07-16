@@ -2,12 +2,16 @@
     margin: 0 4vw;
     height: 350px;
     position: relative;
-    overflow-x: hidden;
+    
 
     .movies-content{
+        overflow-x: scroll;
         display: flex;
         height: 350px;
-        // transform: translate(00%,0);
+        scroll-behavior: smooth; /* Enable smooth scrolling behavior */
+//   scroll-snap-type: x mandatory; /* Enable snap-scrolling in the x-direction */
+//   white-space: nowrap;
+        transform: translate(00%,0);
     }
 
 //     .layer{

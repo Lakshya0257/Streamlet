@@ -3,7 +3,7 @@ import MovieCard from '../movie-card/MovieCard';
 function ContentRow(){
     return (
         <div class="movie-row">
-            <div className="movies-content" id='image-track' data-mouse-down-at="0" data-prev-percentage="0">
+            <div className="movies-content" data-mouse-down-at="0" data-prev-percentage="0">
                 <MovieCard/>
                 <MovieCard/>
                 <MovieCard/>
