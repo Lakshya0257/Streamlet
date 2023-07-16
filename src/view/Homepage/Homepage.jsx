@@ -1,4 +1,5 @@
 import './Homepage.scss'
+import ContentRow from '../../components/content-row/ContentRow';
 import Heading from '../../components/Heading/Heading';
 function Homepage(){
     return (
@@ -23,6 +24,7 @@ function Homepage(){
                     </div>
                 </div>
                 <Heading></Heading>
+                <ContentRow></ContentRow>
             </div>
         </div>
     )
