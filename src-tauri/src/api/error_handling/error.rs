@@ -1,7 +1,11 @@
+
+//Error handler for api, what kind of error api have trown up
 pub mod errors_declaration{
 
+    //Status code 
     use reqwest::{StatusCode, Response};
 
+    //checking errors
     pub fn check_error(data:Response) ->String{
         
         match data.status(){
