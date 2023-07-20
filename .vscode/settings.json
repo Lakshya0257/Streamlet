@@ -1,0 +1,31 @@
+{
+    "rust-analyzer.linkedProjects": [
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml",
+        ".\\src-tauri\\Cargo.toml"
+    ],
+    "rust-analyzer.showUnlinkedFileNotification": false
+}

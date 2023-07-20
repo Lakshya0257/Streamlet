@@ -6,8 +6,26 @@ fn main() {
     .expect("error while running tauri application");
 }
 
+//imports
+//crates intialization
+// all modules should be initialized here
+mod api{
+  // pub mod api_initialize;
 
+  pub mod repository{
+    pub mod homepage;
+  }
 
-// fn main() {
-//   api_initialize::some_function(); // Call a function from the api_initialize module
-// }
+  pub mod constants{
+    pub mod endpoints;
+  }
+
+  pub mod error_handling{
+    pub mod error;
+  }
+
+  pub mod helper{
+    pub mod api_response;
+  }
+}
+

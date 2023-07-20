@@ -1,6 +1,11 @@
 import './Homepage.scss'
 import ContentRow from '../../components/content-row/ContentRow';
 import Heading from '../../components/Heading/Heading';
+import { createSignal } from 'solid-js';
+import { createSignal } from 'solid-js';
+
+
+createSignal
 function Homepage(){
     return (
         <div>
@@ -17,7 +22,7 @@ function Homepage(){
                     <p>Duration : 1h32m</p>
                     <p>⭐ 7.8</p>
                     <h1>Dune</h1>
-                    <p class='des'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut vel recusandae earum nulla maiores cupiditate provident reiciendis quod possimus quis dolor, ipsam minus voluptates corporis id quae iusto consectetur vitae.</p>
+                    <p class='des'>Lorem ipsum dolor sit amet consectetur ad bbipisicing elit. Aut vel recusandae earum nulla maiores cupiditate provident reiciendis quod possimus quis dolor, ipsam minus voluptates corporis id quae iusto consectetur vitae.</p>
                     <div className="btn">
                         <button class='details'>Details</button>
                         <button class='add'>+ Add List</button>
