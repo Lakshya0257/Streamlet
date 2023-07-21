@@ -1,17 +1,17 @@
 const track=document.querySelectorAll(".movies-content");
 const homepageContent=document.getElementById("hpc");
 
-homepageContent.addEventListener('scroll', (event) => {
+// homepageContent.addEventListener('scroll', (event) => {
 
-    const layer=document.getElementById("hpl");
+//     const layer=document.getElementById("hpl");
 
-    const percentage=Math.min((event.target.scrollTop/600)*1,1);
+//     const percentage=Math.min((event.target.scrollTop/600)*1,1);
 
-    console.log(percentage);
-    // layer.style.background = `linear-gradient(180deg, rgba(0, 0, 0, 0.313) 0%, rgb(0, 0, 0) 100%)`;
+//     // console.log(percentage);
+//     // layer.style.background = `linear-gradient(180deg, rgba(0, 0, 0, 0.313) 0%, rgb(0, 0, 0) 100%)`;
 
-    layer.style=`background-color: rgba(0, 0, 0, ${percentage});`
-});
+//     layer.style=`background-color: rgba(0, 0, 0, ${percentage});`
+// });
 
 track.forEach((div) => {
     div.addEventListener('scroll', (event) => {
@@ -20,6 +20,8 @@ track.forEach((div) => {
       const scrollLeft = event.target.scrollLeft;
   
       const scrollPercentage = (scrollLeft / (scrollWidth - clientWidth)) * 100;
+
+      console.log(scrollPercentage);
     
 
       const images=event.target.querySelectorAll(".thumbnails");
@@ -37,7 +39,7 @@ track.forEach((div) => {
 
 
 
-  // window.onmousedown=(e)=>{
+//   window.onmousedown=(e)=>{
 //     track.dataset.mouseDownAt=e.clientX;
 //     console.log(e.clientX);
 // }

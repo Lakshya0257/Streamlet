@@ -14,7 +14,6 @@ fn main() {
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
-
 #[tauri::command]
 // #[warn(non_snake_case)]
 //https://tauri.app/v1/guides/features/command/

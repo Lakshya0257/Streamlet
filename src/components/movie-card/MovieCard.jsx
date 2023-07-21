@@ -1,8 +1,8 @@
 import './MovieCard.scss'
-function MovieCard(){
+function MovieCard({mo_de}){
     return (
         <div class="movie-card" >
-            <img src="https://image.tmdb.org/t/p/original//mV1HOCbUqx7nfFPwledYsvMYHrw.jpg" alt="" draggable="false" class='thumbnails' />
+            <img src={"https://image.tmdb.org/t/p/w500"+mo_de['poster_path']} alt="" draggable="false" class='thumbnails' />
             <h1>Movie Name</h1>
             <div className="des">
                 <p>2018</p>
