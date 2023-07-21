@@ -3,12 +3,12 @@ function MovieCard({mo_de}){
     return (
         <div class="movie-card" >
             <img src={"https://image.tmdb.org/t/p/w500"+mo_de['poster_path']} alt="" draggable="false" class='thumbnails' />
-            <h1>Movie Name</h1>
+            <h1>{mo_de['original_title']}</h1>
             <div className="des">
-                <p>2018</p>
+                <p>{mo_de['release_date']}</p>
                 <div>
-                    <p>❤️ 7800</p>
-                <p>⭐ 7.8</p>
+                    <p>❤️ {mo_de['popularity']}</p>
+                <p>⭐ {mo_de['vote_average']}</p>
                 </div>
             </div>
         </div>
