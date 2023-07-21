@@ -1,25 +1,19 @@
 ## Usage
 
-Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
+Under development project for movie streaming desktop application with api handling in rust and frontend with solidjs.
 
-This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
+# Wanna contribute?
 
-```bash
-$ npm install # or pnpm install or yarn install
-```
+Feel free to connect me for more description for this project and start contributing it.
+Lets build together :)
 
-### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
+### Learn more on the [Solid Website](https://solidjs.com)
 
 ## Available Scripts
 
 In the project directory, you can run:
 
 ### `npm run dev` or `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
 
 ### `npm run build`
 
