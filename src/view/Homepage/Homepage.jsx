@@ -1,16 +1,44 @@
 import './Homepage.scss'
 import ContentRow from '../../components/content-row/ContentRow';
 import Heading from '../../components/Heading/Heading';
-import { createSignal } from 'solid-js';
-import { createSignal } from 'solid-js';
+import { createSignal , createResource, Match } from 'solid-js';
+import { invoke } from '@tauri-apps/api';
 
+// const [trending,getTrending]=createSignal({});
 
-createSignal
 function Homepage(){
+    //Fetching data from rust for homepage
+    const [data] = createResource(fetchData);
+
+    //this function will auto run once the page is loaded
+    //useful for getting api data
+    async function fetchData(){
+        try {
+            const response = await invoke("get_data",{apiType:"homepage"});
+            console.log(response);
+            if(response.status==="success") return response;
+          } catch (error) {
+            console.error(error);
+          }
+    }
+    // if (!data()) {
+    //     return <div>Loading...</div>; // or return a loading spinner, etc.
+    // }
+
+    // Destructure the required data from the response
+    // const { results } = data();
     return (
-        <div>
+            
+            <div>
             <div className="image">
-                <img src="https://media.wired.co.uk/photos/6287be835608c17c6252fca3/3:2/pass/Best-Sci-Fi-Movies-Dune-Culture-Everett-MCDDUNE_WB002.jpg" alt="Movie1" />
+            <Switch fallback={<div>Not Found</div>}>
+            <Match when={data.state === 'pending' || data.state === 'unresolved'}>
+          Loading...
+        </Match>
+            <Match when={data.state === 'ready'}>
+                <img src={"https://image.tmdb.org/t/p/w500"+data.results[0]['poster_path']} alt="Movie1" />
+                </Match>
+            </Switch>
             </div>
             <div class="layout">
                 <div className="top-layer" id='hpl'>

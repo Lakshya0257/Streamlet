@@ -16,15 +16,17 @@ fn main() {
 }
 
 #[tauri::command]
+// #[warn(non_snake_case)]
 //https://tauri.app/v1/guides/features/command/
-async fn get_data(api_type: String) -> Result<Value, ()> {
+async fn get_data(apiType: String) -> Result<Value, ()> {
 
     //client for api callings
     let client: Client = reqwest::Client::new();
-    match api_type.as_str() {
+    match apiType.as_str() {
         "homepage" => {
             println!("Getting Homepage...");
             let value: Value = repository::homepage::homepage::trending_movies(client).await;
+            println!("Tranferring the data to the application...");
             Result::Ok(value)
             // print!("Getting");
         }
