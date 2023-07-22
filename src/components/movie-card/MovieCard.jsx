@@ -1,5 +1,6 @@
 import './MovieCard.scss'
 function MovieCard({mo_de}){
+    console.log
     return (
         <div class="movie-card" >
             <img src={"https://image.tmdb.org/t/p/w500"+mo_de['poster_path']} alt="" draggable="false" class='thumbnails' />

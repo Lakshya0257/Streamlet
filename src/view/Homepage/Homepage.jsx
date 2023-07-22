@@ -1,7 +1,7 @@
 import './Homepage.scss'
 import ContentRow from '../../components/content-row/ContentRow';
 import Heading from '../../components/Heading/Heading';
-import { createSignal , createResource, Match , Show , onCleanup , createEffect } from 'solid-js';
+import { createSignal , createResource, Match , Show , onCleanup , createEffect, onMount } from 'solid-js';
 import { invoke } from '@tauri-apps/api';
 
 // const [trending,getTrending]=createSignal({});
@@ -27,23 +27,47 @@ function Homepage(){
     //useful for getting api data
     const [data] = createResource(fetchData);
 
-     // Function to be executed after data is loaded
-  function afterDataLoaded() {
-    // Do something with the loaded data
-    console.log('Data has been loaded:', data());
-    const script = document.createElement('script');
-    script.src = './src/animation/row-animation.js';
-    script.type = 'module';
-    script.defer = true;
-    document.body.appendChild(script);
-  }
+//   onMount(()=>{
+//     const homepageContent=document.getElementById("hpc");
+
+// homepageContent.addEventListener('scroll', (event) => {
+
+//     const layer=document.getElementById("hpl");
+
+//     const percentage=Math.min((event.target.scrollTop/600)*1,1);
+
+//     // console.log(percentage);
+//     // layer.style.background = `linear-gradient(180deg, rgba(0, 0, 0, 0.313) 0%, rgb(0, 0, 0) 100%)`;
+
+//     layer.style=`background-color: rgba(0, 0, 0, ${percentage});`
+// });
+//   })
+
+  createEffect(()=>{
+    if(data.state==="ready"){
+        const homepageContent=document.getElementById("hpc");
+
+homepageContent.addEventListener('scroll', (event) => {
+
+    const layer=document.getElementById("hpl");
+
+    const percentage=Math.min((event.target.scrollTop/600)*1,1);
+
+    console.log(percentage);
+    // layer.style.background = `linear-gradient(180deg, rgba(0, 0, 0, 0.313) 0%, rgb(0, 0, 0) 100%)`;
+
+    layer.style=`background-color: rgba(0, 0, 0, ${percentage});`
+});
+    }
+  })
 
   // Use createEffect with an empty dependency array to trigger the function once on mount
-  createEffect(() => {
-    if (data.state === "ready") {
-      afterDataLoaded();
-    }
-  }, []);
+//   createEffect(() => {
+//     if (data.state === "ready") {
+//       afterDataLoaded();
+//     }
+//   }, []);
+
     
     
     // if (!data()) {
@@ -56,7 +80,7 @@ function Homepage(){
         <Show when={data.state==="ready"}>
             <div>
             <div className="image">
-            <img src={"https://i0.wp.com/bloody-disgusting.com/wp-content/uploads/2021/08/dune-poster-2-new.png?fit=1515%2C825&ssl=1"} alt="Movie1" />
+            <img src={"https://image.tmdb.org/t/p/original"+data()['data']['results'][0]["backdrop_path"]} alt="Movie1" />
             {/* <Switch fallback={<div>Not Found</div>}>
             <Match when={data.state === 'pending' || data.state === 'unresolved'}>
           Loading...
@@ -73,10 +97,10 @@ function Homepage(){
             </div>
             <div className="content" id='hpc'>
                 <div className="top-info">
-                    <p>Duration : 1h32m</p>
-                    <p>⭐ 7.8</p>
-                    <h1>Dune</h1>
-                    <p class='des'>Lorem ipsum dolor sit amet consectetur ad bbipisicing elit. Aut vel recusandae earum nulla maiores cupiditate provident reiciendis quod possimus quis dolor, ipsam minus voluptates corporis id quae iusto consectetur vitae.</p>
+                    <p>Popularity : {data()['data']['results'][0]['popularity']}</p>
+                    <p>⭐ {data()['data']['results'][0]['vote_average']}</p>
+                    <h1>{data()['data']['results'][0]['original_title']}</h1>
+                    <p class='des'>{data()['data']['results'][0]['overview']}</p>
                     <div className="btn">
                         <button class='details'>Details</button>
                         <button class='add'>+ Add List</button>
