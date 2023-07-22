@@ -82,15 +82,17 @@
                     }
                 }
 
-                .company-img {
+                .genre {
                     display: flex;
 
-                    img {
-                        margin-right: 30px;
-                        width: 50px;
-                        height: 50px;
-                        object-fit: cover;
-                        border-radius: 50%;
+                    div {
+                        margin-right: 10px;
+                        padding:4px 10px;
+                        // border: 1px solid red;
+                        background-color: rgba(255, 0, 0, 0.673);
+                        // height: 50px;
+                        border-radius: 15px;
+                        font-size: .7rem;
                     }
                 }
             }

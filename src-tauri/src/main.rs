@@ -17,7 +17,7 @@ fn main() {
 #[tauri::command]
 // #[warn(non_snake_case)]
 //https://tauri.app/v1/guides/features/command/
-async fn get_data(apiType: String) -> Result<Value, ()> {
+async fn get_data(apiType: String , id:Option<String>) -> Result<Value, ()> {
 
     //client for api callings
     let client: Client = reqwest::Client::new();
@@ -25,10 +25,20 @@ async fn get_data(apiType: String) -> Result<Value, ()> {
         "homepage" => {
             println!("Getting Homepage...");
             let value: Value = repository::homepage::homepage::trending_movies(client).await;
-            println!("Tranferring the data to the application...");
+            // println!("Tranferring the data to the application...");
             Result::Ok(value)
             // print!("Getting");
-        }
+        },
+        "top_rated"=>{
+            println!("Getting Top Rated Movies...");
+            let value: Value = repository::movies_list::movies_list::top_rated(client).await;
+            Result::Ok(value)
+        },
+        "get_movie"=>{
+            println!("Getting Movie Details...");
+            let value: Value = repository::movies::movies::movie_detail(client, &id.unwrap_or(String::from(""))).await;
+            Result::Ok(value)
+        },
 
         //Getting invalid request from front-end side
         _ => Result::Ok(json!({
@@ -52,6 +62,8 @@ mod api {
 
       //all apis
         pub mod homepage;
+        pub mod movies_list;
+        pub mod movies;
     }
 
     // Constant modules for api-calling etc

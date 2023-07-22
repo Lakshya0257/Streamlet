@@ -9,6 +9,7 @@ import {
   onCleanup,
   createEffect,
   onMount,
+  For
 } from "solid-js";
 import { invoke } from "@tauri-apps/api";
 
@@ -19,37 +20,26 @@ const fetchData = async () => {
   const response = await invoke("get_data", { apiType: "homepage" });
   console.log(response);
   return response;
-  // try {
-  //     const response = await invoke("get_data",{apiType:"homepage"});
-  //     console.log(response);
-  //     if(response.status==="success") return response;
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
+};
+const topRated = async () => {
+  const response = await invoke("get_data", { apiType: "top_rated" });
+//   console.log(response);
+  const res=await song_detail(response['data']['results'][5]['id'].toString());
+  return res;
+};
+const song_detail = async (id) => {
+  const response = await invoke("get_data", { apiType: "get_movie" , id: id});
+  console.log(response);
+  return response;
 };
 
 function Homepage() {
-  // const data = fetchData();
   //this function will auto run once the page is loaded
   //useful for getting api data
   const [data] = createResource(fetchData);
-
-  //   onMount(()=>{
-  //     const homepageContent=document.getElementById("hpc");
-
-  // homepageContent.addEventListener('scroll', (event) => {
-
-  //     const layer=document.getElementById("hpl");
-
-  //     const percentage=Math.min((event.target.scrollTop/600)*1,1);
-
-  //     // console.log(percentage);
-  //     // layer.style.background = `linear-gradient(180deg, rgba(0, 0, 0, 0.313) 0%, rgb(0, 0, 0) 100%)`;
-
-  //     layer.style=`background-color: rgba(0, 0, 0, ${percentage});`
-  // });
-  //   })
-
+  const [top_rated] = createResource(topRated);
+//   const [song_detail] = createResource(topRated);
+  
   createEffect(() => {
     if (data.state === "ready") {
       const homepageContent = document.getElementById("hpc");
@@ -59,27 +49,11 @@ function Homepage() {
 
         const percentage = Math.min((event.target.scrollTop / 600) * 1, 1);
 
-        console.log(percentage);
-        // layer.style.background = `linear-gradient(180deg, rgba(0, 0, 0, 0.313) 0%, rgb(0, 0, 0) 100%)`;
-
         layer.style = `background-color: rgba(0, 0, 0, ${percentage});`;
       });
     }
   });
 
-  // Use createEffect with an empty dependency array to trigger the function once on mount
-  //   createEffect(() => {
-  //     if (data.state === "ready") {
-  //       afterDataLoaded();
-  //     }
-  //   }, []);
-
-  // if (!data()) {
-  //     return <div>Loading...</div>; // or return a loading spinner, etc.
-  // }
-
-  // Destructure the required data from the response
-  // const { results } = data();
   return (
     <Show when={data.state === "ready"}>
       <div>
@@ -120,39 +94,35 @@ function Homepage() {
             title={"Trending Now"}
           ></Heading>
           <ContentRow content={data()["data"]["results"]}></ContentRow>
+          <Show when={top_rated.state==="ready"}>
           <Heading title={"Top Rated"}></Heading>
           <div className="top-rated">
-            <img class="backdrop" src="https://image.tmdb.org/t/p/original/tmU7GeKVybMWFButWEGl2M4GeiP.jpg" alt="" />
+            <img class="backdrop" src={"https://image.tmdb.org/t/p/original"+top_rated()['data']['backdrop_path']} alt="" />
             <img
               src={
-                "https://image.tmdb.org/t/p/original/3bhkrj58Vtu7enYsRolD1fZdja1.jpg"
+                "https://image.tmdb.org/t/p/original"+top_rated()['data']['poster_path']
               }
               alt=""
             />
             <div className="content-div">
               <div className="top-bar">
                 <div className="bar-content">
-                  <h2>The Godfather</h2>
-                  <p>"An offer you can't refuse."</p>
+                  <h2>{top_rated()['data']['title']}</h2>
+                  <p>"{top_rated()['data']['tagline']}"</p>
                 </div>
-                <div className="company-img">
-                  <img
-                    src="https://image.tmdb.org/t/p/original/gz66EfNoYPqHTYI4q9UEN4CbHRc.png"
-                    alt=""
-                  />
-                  <img
-                    src="https://image.tmdb.org/t/p/original/3bhkrj58Vtu7enYsRolD1fZdja1.jpg"
-                    alt=""
-                  />
-                  <img
-                    src="https://image.tmdb.org/t/p/original/3bhkrj58Vtu7enYsRolD1fZdja1.jpg"
-                    alt=""
-                  />
+                <div className="genre">
+                    <For each={top_rated()['data']['genres']}>{(genre)=>{
+                        return <div>{genre['name']}</div>
+                    }
+
+                    }</For>
                 </div>
               </div>
-              <p class="des">Spanning the years 1945 to 1955, a chronicle of the fictional Italian-American Corleone crime family. When organized crime family patriarch, Vito Corleone barely survives an attempt on his life, his youngest son, Michael steps in to take care of the would-be killers, launching a campaign of bloody revenge.</p>
+              <p class="des">{top_rated()['data']['overview']}</p>
+              <p>⭐ {top_rated()['data']['vote_average']}</p>
             </div>
           </div>
+          </Show>
         </div>
       </div>
     </Show>
