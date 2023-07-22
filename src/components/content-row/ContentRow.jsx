@@ -1,5 +1,4 @@
 import "./ContentRow.scss";
-import MovieCard from "../movie-card/MovieCard";
 import { For, createSignal, onMount } from "solid-js";
 function ContentRow({ content }) {
 
@@ -39,7 +38,7 @@ function ContentRow({ content }) {
               <div class="movie-card">
                 <img
                   src={
-                    "https://image.tmdb.org/t/p/original" +
+                    "https://image.tmdb.org/t/p/w500" +
                     movie["backdrop_path"]
                   }
                   alt=""
