@@ -39,6 +39,16 @@ async fn get_data(apiType: String , id:Option<String>) -> Result<Value, ()> {
             let value: Value = repository::movies::movies::movie_detail(client, &id.unwrap_or(String::from(""))).await;
             Result::Ok(value)
         },
+        "movie_images"=>{
+            println!("Getting Movie Images...");
+            let value: Value = repository::movies::movies::movie_images(client, &id.unwrap_or(String::from(""))).await;
+            Result::Ok(value)
+        },
+        "movie_cast"=>{
+            println!("Getting Movie casts...");
+            let value: Value = repository::movies::movies::movie_cast(client, &id.unwrap_or(String::from(""))).await;
+            Result::Ok(value)
+        },
 
         //Getting invalid request from front-end side
         _ => Result::Ok(json!({
