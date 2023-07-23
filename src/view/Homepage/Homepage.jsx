@@ -24,7 +24,7 @@ const fetchData = async () => {
 const topRated = async () => {
   const response = await invoke("get_data", { apiType: "top_rated" });
 //   console.log(response);
-  const res=await song_detail(response['data']['results'][5]['id'].toString());
+  const res=await song_detail(response['data']['results'][0]['id'].toString());
   return res;
 };
 const song_detail = async (id) => {
