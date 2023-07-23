@@ -2,6 +2,7 @@ import "./ContentRow.scss";
 import { For, createSignal, onMount, Show } from "solid-js";
 import { Motion, Presence } from "@motionone/solid";
 import MovieDetail from "../movie-detail/MovieDetail";
+
 function ContentRow({ content }) {
   const [clicked, setClicked] = createSignal(false);
   const [left, setLeft] = createSignal(0);
@@ -117,6 +118,7 @@ function ContentRow({ content }) {
               <div class="movie-card">
                 <img
                   onClick={movieDetail}
+                  id={movie['id']}
                   src={
                     "https://image.tmdb.org/t/p/w500" +
                     movie["backdrop_path"]
@@ -178,7 +180,7 @@ function ContentRow({ content }) {
               src={bgImage()}
               alt=""
               style={{
-                width: "100%",
+                width: "100%", 
                 height: "100%",
                 position: "absolute",
                 top: "0",
@@ -189,7 +191,7 @@ function ContentRow({ content }) {
                 "object-position": `${objPos()}`,
               }}
             />
-            <MovieDetail onChildClick={handleChildClick}></MovieDetail>
+            <MovieDetail onChildClick={handleChildClick} id={target().id}></MovieDetail>
           </Motion.div>
         </Show>
       </Presence>
