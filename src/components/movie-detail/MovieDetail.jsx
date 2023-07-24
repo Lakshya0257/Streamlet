@@ -1,5 +1,6 @@
 import { Motion, Presence } from "@motionone/solid";
 import "./MovieDetail.scss";
+import Streaming from "../streaming-frame/Streaming";
 import {
   For,
   createSignal,
@@ -15,6 +16,9 @@ function MovieDetail(props) {
   console.log(props.id);
   const [showcontent, setShowContent] = createSignal(false);
   const [showGallery, setShowGallery] = createSignal(false);
+  const [streaming, setStreaming] = createSignal(false);
+  const [streamingUrl, setStreamingUrl] = createSignal("");
+  const [showServers, setShowServers] = createSignal(false);
 
   function back() {
     setShowGallery(false);
@@ -26,6 +30,23 @@ function MovieDetail(props) {
     setShowGallery(!showGallery());
   }
 
+  function streamingSwitcher(ev) {
+    if(!streaming()){
+      const target = ev.currentTarget;
+      setStreamingUrl(movieUrls()['data'][target.id]);
+      setShowContent(false);
+      setShowGallery(false);
+      setStreaming(true);
+    }else{
+      setStreaming(false);
+    }
+    
+  }
+
+  function showServer(){
+    setShowServers(true);
+  }
+
   const movie_detail = async () => {
     const response = await invoke("get_data", {
       apiType: "get_movie",
@@ -34,26 +55,27 @@ function MovieDetail(props) {
     // console.log(response);
     return response;
   };
+  
   const movie_images = async () => {
     const response = await invoke("get_data", {
       apiType: "movie_images",
       id: props.id,
     });
+    // console.log(response);
+    return response;
+  };
+  const movie_urls = async () => {
+    const response = await invoke("get_data", {
+      apiType: "streaming_url",
+      id: props.id,
+    });
     console.log(response);
     return response;
   };
-//   const movie_cast = async () => {
-//     const response = await invoke("get_data", {
-//       apiType: "movie_cast",
-//       id: props.id,
-//     });
-//     console.log(response);
-//     return response;
-//   };
 
   const [movieDetail] = createResource(movie_detail);
   const [gallaryData] = createResource(movie_images);
-//   const [movieCast] = createResource(movie_cast);
+  const [movieUrls] = createResource(movie_urls);
 
   createEffect(() => {
     if (movieDetail.state === "ready") {
@@ -63,6 +85,16 @@ function MovieDetail(props) {
   });
 
   return (
+    <>
+    <Show when={streaming()}>
+    <i
+          class="fa-solid fa-angle-left backIcon"
+          onClick={back}
+          style="color: #ffffff;"
+        ></i>
+      <Streaming url={streamingUrl()}></Streaming>
+    </Show>
+    <Presence>
     <Show when={showcontent()}>
       <Motion.div
         initial={{
@@ -77,6 +109,9 @@ function MovieDetail(props) {
         }}
         animate={{
           width: "100vw",
+        }}
+        exit={{
+          opacity:"0",
         }}
         transition={{
           duration: 0.5,
@@ -142,6 +177,46 @@ function MovieDetail(props) {
               <p>{movieDetail()["data"]["overview"]}</p>
               <hr />
               <p>Revenue: 💲{movieDetail()["data"]["revenue"]}</p>
+              <Show when={movieUrls.state==='ready'}>
+              <hr />
+              <Motion.div
+              initial={{
+                scale:0
+              }}
+              animate={{
+                scale:1
+              }}
+              transition={{
+                duration:0.4,
+                easing:'ease-in-out'
+              }}
+               className="stream">
+              <button class="details" onClick={showServer}>Watch Now</button>
+              <Show when={showServers()}>
+                <For each={movieUrls()['data']}>{(url,i)=>{
+                  return <Motion.div
+                  initial={{
+                    opacity:0
+                  }}
+                  animate={{
+                    opacity:1
+                  }}
+                  transition={{
+                    duration:0.4,
+                    easing:'ease-in-out'
+                  }}
+                  class="servers"
+                  >
+                    <p onClick={streamingSwitcher} id={i()}>Server {i()+1}</p>
+                  </Motion.div>
+                }}
+                </For>
+              </Show>
+              </Motion.div>
+              </Show>
+              {/* <dialog id="dialog">
+                <h1>Dialog</h1>
+              </dialog> */}
             </div>
             <i
               class="fa-solid fa-angles-down fa-bounce"
@@ -236,6 +311,8 @@ function MovieDetail(props) {
         </Show>
       </Motion.div>
     </Show>
+    </Presence>
+    </>
   );
 }
 

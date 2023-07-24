@@ -49,6 +49,61 @@
         justify-content: center;
         align-items: start;
 
+        .stream{
+            display: flex;
+
+            .servers{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                p{
+                    margin-left: 2vw;
+                    margin-right: 2vw;
+                    font-size: .8rem;
+                    cursor: pointer;
+                    color: rgb(142, 142, 142);
+                }
+            }
+        }
+
+        button {
+                width: 140px;
+                height: 40px;
+                border-radius: 20px;
+                transition: 0.3s ease-in-out width, 0.3s ease-in-out height;
+            }
+
+            button:hover {
+                color: black;
+                width: 150px;
+                height: 50px;
+            }
+
+            .details {
+                -webkit-box-shadow: -1px 1px 49px 1px rgba(255, 0, 0, 0.69);
+                -moz-box-shadow: -1px 1px 49px 1px rgba(255, 0, 0, 0.69);
+                box-shadow: -1px 1px 49px 1px rgba(255, 0, 0, 0.363);
+                background-color: red;
+                margin-right: 30px;
+            }
+
+            // dialog{
+            //     background-color: rgb(57, 57, 57);
+            //     border: none;
+            //     border-radius: 10px;
+            //     width: 15vw;
+            //     height: 40vh;
+            //     margin-left: auto;
+            //     margin-right: auto;
+            //     margin-top: auto;
+            //     margin-bottom: auto;
+            // }
+
+            // dialog::backdrop{
+                
+            //     background: rgba(0, 0, 0, 0.487);
+            // }
+
 
         h1{
             font-size: 5rem;

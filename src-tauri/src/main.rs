@@ -49,6 +49,11 @@ async fn get_data(apiType: String , id:Option<String>) -> Result<Value, ()> {
             let value: Value = repository::movies::movies::movie_cast(client, &id.unwrap_or(String::from(""))).await;
             Result::Ok(value)
         },
+        "streaming_url"=>{
+            println!("Getting Movie url...");
+            let value: Value = repository::streaming::streaming::streaming::streaming_url(client, &id.unwrap_or(String::from(""))).await;
+            Result::Ok(value)
+        },
 
         //Getting invalid request from front-end side
         _ => Result::Ok(json!({
@@ -74,6 +79,10 @@ mod api {
         pub mod homepage;
         pub mod movies_list;
         pub mod movies;
+        
+        pub mod streaming{
+            pub mod streaming;
+        }
     }
 
     // Constant modules for api-calling etc
