@@ -3,12 +3,12 @@
 pub mod errors_declaration{
 
     //Status code 
-    use reqwest::{StatusCode, Response};
+    use reqwest::{StatusCode,Error};
 
     //checking errors
-    pub fn check_error(data:Response) ->String{
+    pub fn check_error(data:Error) ->String{
         
-        match data.status(){
+        match data.status().unwrap_or(StatusCode::BAD_REQUEST){
             StatusCode::UNAUTHORIZED=>{
                 String::from("Unauthorized")
             },

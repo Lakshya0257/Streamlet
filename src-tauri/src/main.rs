@@ -7,8 +7,7 @@ use reqwest::Client;
 use serde_json::{json, Value};
 
 fn main() {
-
-  // main start of application
+    // main start of application
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![get_data])
         .run(tauri::generate_context!())
@@ -17,8 +16,7 @@ fn main() {
 #[tauri::command]
 // #[warn(non_snake_case)]
 //https://tauri.app/v1/guides/features/command/
-async fn get_data(apiType: String , id:Option<String>) -> Result<Value, ()> {
-
+async fn get_data(apiType: String, id: Option<String>) -> Result<Value, ()> {
     //client for api callings
     let client: Client = reqwest::Client::new();
     match apiType.as_str() {
@@ -28,37 +26,56 @@ async fn get_data(apiType: String , id:Option<String>) -> Result<Value, ()> {
             // println!("Tranferring the data to the application...");
             Result::Ok(value)
             // print!("Getting");
-        },
-        "top_rated"=>{
+        }
+        "top_rated" => {
             println!("Getting Top Rated Movies...");
             let value: Value = repository::movies_list::movies_list::top_rated(client).await;
             Result::Ok(value)
-        },
-        "get_movie"=>{
+        }
+        "get_movie" => {
             println!("Getting Movie Details...");
-            let value: Value = repository::movies::movies::movie_detail(client, &id.unwrap_or(String::from(""))).await;
+            let value: Value =
+                repository::movies::movies::movie_detail(client, &id.unwrap_or(String::from("")))
+                    .await;
             Result::Ok(value)
-        },
-        "movie_images"=>{
+        }
+        "movie_images" => {
             println!("Getting Movie Images...");
-            let value: Value = repository::movies::movies::movie_images(client, &id.unwrap_or(String::from(""))).await;
+            let value: Value =
+                repository::movies::movies::movie_images(client, &id.unwrap_or(String::from("")))
+                    .await;
             Result::Ok(value)
-        },
-        "movie_cast"=>{
+        }
+        "movie_cast" => {
             println!("Getting Movie casts...");
-            let value: Value = repository::movies::movies::movie_cast(client, &id.unwrap_or(String::from(""))).await;
+            let value: Value =
+                repository::movies::movies::movie_cast(client, &id.unwrap_or(String::from("")))
+                    .await;
             Result::Ok(value)
-        },
-        "streaming_url"=>{
+        }
+        "streaming_url" => {
             println!("Getting Movie url...");
-            let value: Value = repository::streaming::streaming::streaming::streaming_url(client, &id.unwrap_or(String::from(""))).await;
+            let value: Value = repository::streaming::streaming::streaming::streaming_url(
+                client,
+                &id.unwrap_or(String::from("")),
+            )
+            .await;
             Result::Ok(value)
-        },
-        "movie_trailer"=>{
+        }
+        "movie_trailer" => {
             println!("Getting Movie trailer...");
-            let value: Value = repository::movies::movies::movie_trailer(client, &id.unwrap_or(String::from(""))).await;
+            let value: Value =
+                repository::movies::movies::movie_trailer(client, &id.unwrap_or(String::from("")))
+                    .await;
             Result::Ok(value)
-        },
+        }
+        "search_movie" => {
+            println!("Searching Movie...");
+            let value: Value =
+                repository::search::search::search_movie(client, &id.unwrap_or(String::from("")))
+                    .await;
+            Result::Ok(value)
+        }
 
         //Getting invalid request from front-end side
         _ => Result::Ok(json!({
@@ -80,12 +97,13 @@ mod api {
     // All api callings will be called from here
     pub mod repository {
 
-      //all apis
+        //all apis
         pub mod homepage;
-        pub mod movies_list;
         pub mod movies;
-        
-        pub mod streaming{
+        pub mod movies_list;
+        pub mod search;
+
+        pub mod streaming {
             pub mod streaming;
         }
     }

@@ -18,21 +18,19 @@ pub mod movies {
             .header(AUTHORIZATION, auth_header_value)
             .send()
             .await;
-        match response {
-            Result::Ok(value) => {
-                //Checking response from the server
-                //Checking whether it contains error or status code is 200
-                api_response::enum_response::check_response(value).await
-            }
-            //Handling errors if api didn't return a response
-            // or for some other reason api returned an error
-            Result::Err(_) => {
-                json!({
-                    "status": "error",
-                    "data": "Error thown by application",
-                })
-            }
-        }
+        api_response::enum_response::check_response(response).await
+        // match response {
+        //     Result::Ok(value) => {
+        //         //Checking response from the server
+        //         //Checking whether it contains error or status code is 200
+        //         api_response::enum_response::check_response(value).await
+        //     }
+        //     //Handling errors if api didn't return a response
+        //     // or for some other reason api returned an error
+        //     Result::Err(_) => {
+        //         api_response::enum_response::check_response(value).await
+        //     }
+        // }
     }
 
     //Get images for a particular movie
@@ -47,21 +45,19 @@ pub mod movies {
             .header(AUTHORIZATION, auth_header_value)
             .send()
             .await;
-        match response {
-            Result::Ok(value) => {
-                //Checking response from the server
-                //Checking whether it contains error or status code is 200
-                api_response::enum_response::check_response(value).await
-            }
-            //Handling errors if api didn't return a response
-            // or for some other reason api returned an error
-            Result::Err(_) => {
-                json!({
-                    "status": "error",
-                    "data": "Error thown by application",
-                })
-            }
-        }
+        api_response::enum_response::check_response(response).await
+        // match response {
+        //     Result::Ok(value) => {
+        //         //Checking response from the server
+        //         //Checking whether it contains error or status code is 200
+        //         api_response::enum_response::check_response(value).await
+        //     }
+        //     //Handling errors if api didn't return a response
+        //     // or for some other reason api returned an error
+        //     Result::Err(_) => {
+        //         api_response::enum_response::check_response(value).await
+        //     }
+        // }
     }
     pub async fn movie_cast(client: reqwest::Client, id: &str) -> Value {
         //https://www.themoviedb.org/settings/api
@@ -74,21 +70,19 @@ pub mod movies {
             .header(AUTHORIZATION, auth_header_value)
             .send()
             .await;
-        match response {
-            Result::Ok(value) => {
-                //Checking response from the server
-                //Checking whether it contains error or status code is 200
-                api_response::enum_response::check_response(value).await
-            }
-            //Handling errors if api didn't return a response
-            // or for some other reason api returned an error
-            Result::Err(_) => {
-                json!({
-                    "status": "error",
-                    "data": "Error thown by application",
-                })
-            }
-        }
+        api_response::enum_response::check_response(response).await
+        // match response {
+        //     Result::Ok(value) => {
+        //         //Checking response from the server
+        //         //Checking whether it contains error or status code is 200
+        //         api_response::enum_response::check_response(value).await
+        //     }
+        //     //Handling errors if api didn't return a response
+        //     // or for some other reason api returned an error
+        //     Result::Err(_) => {
+        //         api_response::enum_response::check_response(value).await
+        //     }
+        // }
     }
     pub async fn movie_trailer(client: reqwest::Client, id: &str) -> Value {
         //https://www.themoviedb.org/settings/api
@@ -101,34 +95,34 @@ pub mod movies {
             .header(AUTHORIZATION, auth_header_value)
             .send()
             .await;
-        match response {
-            Result::Ok(value) => {
+        let res=api_response::enum_response::check_response(response).await;
+        match res["status"].as_str().unwrap() {
+            "success" => {
                 //Checking response from the server
                 //Checking whether it contains error or status code is 200
-                let output = api_response::enum_response::check_response(value).await;
-                if output["status"].as_str().unwrap() == "success" {
-                    for links in output["data"]["results"].as_array().unwrap() {
-                        if links["type"].as_str().unwrap() == "Trailer" {
-                            return json!({
-                                "status": "success",
-                                "data": (String::from("https://www.youtube.com/embed/")+links["key"].as_str().unwrap()).as_str(),
-                            });
-                        }
-                    };
-                    
-                return json!({
-                    "status": "error",
-                    "data": "Not Found",
+                for links in res["data"]["results"].as_array().unwrap() {
+                    if links["type"].as_str().unwrap() == "Trailer" {
+                        return json!({
+                            "status": "success",
+                            "data": (String::from("https://www.youtube.com/embed/")+links["key"].as_str().unwrap()).as_str(),
+                        });
+                    }
+                };
+                json!({
+                    "status": "success",
+                    "data": "No trailer found",
                 })
-                }
-                output
-            }
+                
+            },
             //Handling errors if api didn't return a response
             // or for some other reason api returned an error
-            Result::Err(_) => {
+            "error" => {
+                res
+            },
+            _=>{
                 json!({
                     "status": "error",
-                    "data": "Error thown by application",
+                    "data": "Some error occurred",
                 })
             }
         }

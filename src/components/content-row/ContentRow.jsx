@@ -3,7 +3,7 @@ import { For, createSignal, onMount, Show } from "solid-js";
 import { Motion, Presence } from "@motionone/solid";
 import MovieDetail from "../movie-detail/MovieDetail";
 
-function ContentRow({ content }) {
+function ContentRow(prop) {
   const [clicked, setClicked] = createSignal(false);
   const [left, setLeft] = createSignal(0);
   const [top, setTop] = createSignal(0);
@@ -112,14 +112,14 @@ function ContentRow({ content }) {
         data-mouse-down-at="0"
         data-prev-percentage="0"
       >
-        <For each={content}>
+        <For each={prop.content}>
           {(movie) => {
             return (
               <div class="movie-card">
                 <img
                   onClick={movieDetail}
                   id={movie['id']}
-                  src={
+                  src={movie["backdrop_path"]===null? "https://t4.ftcdn.net/jpg/02/86/32/31/360_F_286323187_mDk3N4nGDaPkUmhNcdBe3RjSOfKqx4nZ.jpg":
                     "https://image.tmdb.org/t/p/w500" +
                     movie["backdrop_path"]
                   }
@@ -127,7 +127,7 @@ function ContentRow({ content }) {
                   draggable="false"
                   class="thumbnails"
                 />
-                <h1>{movie["original_title"]}</h1>
+                <h1>{movie["title"]}</h1>
                 <div className="des">
                   <p>{movie["release_date"]}</p>
                   <div>

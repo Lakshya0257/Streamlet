@@ -12,21 +12,19 @@ pub mod movies_list{
         let auth_header_value = HeaderValue::from_str(&format!("Bearer {}", endpoints::creds::TOKEN)).expect("Invalid header value");
         
         let response:Result<Response,Error> = client.get(endpoints::endpoints::TOPRATED).header(AUTHORIZATION,auth_header_value).send().await;
-        match response {
-            Result::Ok(value)=>{
+        api_response::enum_response::check_response(response).await
+        // match response {
+        //     Result::Ok(value)=>{
 
-                //Checking response from the server
-                //Checking whether it contains error or status code is 200
-                api_response::enum_response::check_response(value).await
-            },
-            //Handling errors if api didn't return a response
-            // or for some other reason api returned an error
-            Result::Err(_)=>{
-                json!({
-                    "status": "error",
-                    "data": "Error thown by application",
-                })
-            }
-        }
+        //         //Checking response from the server
+        //         //Checking whether it contains error or status code is 200
+        //         api_response::enum_response::check_response(value).await
+        //     },
+        //     //Handling errors if api didn't return a response
+        //     // or for some other reason api returned an error
+        //     Result::Err(_)=>{
+        //         api_response::enum_response::check_response(value).await
+        //     }
+        // }
     }
 }

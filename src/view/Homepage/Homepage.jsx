@@ -3,6 +3,7 @@ import ContentRow from "../../components/content-row/ContentRow";
 import { Motion, Presence } from "@motionone/solid";
 import Heading from "../../components/Heading/Heading";
 import MovieDetail from "../../components/movie-detail/MovieDetail";
+import Search from "../../components/search/Search";
 import {
   createSignal,
   createResource,
@@ -134,7 +135,7 @@ function Homepage() {
               <p class="des">{data()["data"]["results"][0]["overview"]}</p>
               <div className="btn">
                 <button class="details" onClick={movieDetailClick}>
-                  Details
+                  Watch Now
                 </button>
                 <button class="add">+ Add List</button>
               </div>
@@ -181,6 +182,11 @@ function Homepage() {
                 </div>
               </div>
             </Show>
+            {/* <Heading
+              icon={"fa-solid fa-arrow-trend-up"}
+              title={"Search"}
+            ></Heading> */}
+            <Search></Search>
           </Motion.div>
         </Show>
         <Show when={topMovieDetail()}>
@@ -190,6 +196,7 @@ function Homepage() {
           ></MovieDetail>
         </Show>
       </div>
+      
     </Show>
   );
 }

@@ -102,6 +102,9 @@ function MovieDetail(props) {
       id: props.id,
     });
     console.log(response);
+    if(response['data']==="No trailer found"){
+      return
+    }
     setStreamingUrl(response['data']);
     return response;
   };
@@ -343,7 +346,7 @@ function MovieDetail(props) {
               </Show>
                 </div>
               </div>
-            <Motion.div
+            {/* <Motion.div
             initial={{
                 opacity:0,
             }}
@@ -369,7 +372,7 @@ function MovieDetail(props) {
                 </For>
                 </div>
                 
-            </Motion.div>
+            </Motion.div> */}
             </div>
             <div className="right-tab">
               <div className="tabs">
