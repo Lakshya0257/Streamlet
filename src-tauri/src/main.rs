@@ -54,6 +54,11 @@ async fn get_data(apiType: String , id:Option<String>) -> Result<Value, ()> {
             let value: Value = repository::streaming::streaming::streaming::streaming_url(client, &id.unwrap_or(String::from(""))).await;
             Result::Ok(value)
         },
+        "movie_trailer"=>{
+            println!("Getting Movie trailer...");
+            let value: Value = repository::movies::movies::movie_trailer(client, &id.unwrap_or(String::from(""))).await;
+            Result::Ok(value)
+        },
 
         //Getting invalid request from front-end side
         _ => Result::Ok(json!({

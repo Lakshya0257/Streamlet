@@ -1,6 +1,5 @@
 pub mod streaming{
     use reqwest::Client;
-use reqwest::ClientBuilder;
     // use crate::Value;
     use serde_json::{Value, json};
     pub async fn streaming_url(client: reqwest::Client,id:&str) -> Value {
@@ -8,7 +7,7 @@ use reqwest::ClientBuilder;
         // let clients = ClientBuilder::new().dangerous_insecure_ssl(true).build().unwrap();
 
         let base_urls=vec![
-            "https://vidsrc.me/embed/movie?tmdb=REPLACE",
+            // "https://vidsrc.me/embed/movie?tmdb=REPLACE",
             "https://www.2embed.cc/embed/REPLACE",
             "https://embed.smashystream.com/playere.php?tmdb=REPLACE",
             "https://autoembed.to/movie/tmdb/REPLACE",

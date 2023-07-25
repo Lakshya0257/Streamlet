@@ -19,6 +19,23 @@ function MovieDetail(props) {
   const [streaming, setStreaming] = createSignal(false);
   const [streamingUrl, setStreamingUrl] = createSignal("");
   const [showServers, setShowServers] = createSignal(false);
+  const [tab, selectTab] = createSignal("cast");
+
+  function tabSelector(ev){
+    const cast=document.getElementById("cast");
+    const crew=document.getElementById("crew");
+    const target = ev.currentTarget;
+    if(target.id==="cast"){
+      cast.style.backgroundColor=`red`;
+        crew.style.backgroundColor=`transparent`;
+        selectTab("cast");
+    }else{
+      
+      cast.style.backgroundColor=`transparent`;
+        crew.style.backgroundColor=`red`;
+        selectTab("crew");
+    }
+  }
 
   function back() {
     setShowGallery(false);
@@ -31,16 +48,23 @@ function MovieDetail(props) {
   }
 
   function streamingSwitcher(ev) {
-    if(!streaming()){
-      const target = ev.currentTarget;
-      setStreamingUrl(movieUrls()['data'][target.id]);
-      setShowContent(false);
-      setShowGallery(false);
-      setStreaming(true);
-    }else{
-      setStreaming(false);
-    }
+    const target = ev.currentTarget;
+    setStreamingUrl(movieUrls()['data'][target.id]);
+    setShowGallery(true);
+    // if(!streaming()){
+    //   const target = ev.currentTarget;
+    //   setStreamingUrl(movieUrls()['data'][target.id]);
+    //   setShowContent(false);
+    //   setShowGallery(false);
+    //   setStreaming(true);
+    // }else{
+    //   setStreaming(false);
+    // }
     
+  }
+
+  function playTrailer(){
+    setStreamingUrl(movieTrailer()['data']);
   }
 
   function showServer(){
@@ -72,10 +96,31 @@ function MovieDetail(props) {
     console.log(response);
     return response;
   };
+  const movie_trailer = async () => {
+    const response = await invoke("get_data", {
+      apiType: "movie_trailer",
+      id: props.id,
+    });
+    console.log(response);
+    setStreamingUrl(response['data']);
+    return response;
+  };
+  const movie_cast = async () => {
+    const response = await invoke("get_data", {
+      apiType: "movie_cast",
+      id: props.id,
+    });
+    console.log(response);
+    return response;
+  };
+
+
 
   const [movieDetail] = createResource(movie_detail);
   const [gallaryData] = createResource(movie_images);
   const [movieUrls] = createResource(movie_urls);
+  const [movieTrailer] = createResource(movie_trailer);
+  const [movieCast] = createResource(movie_cast);
 
   createEffect(() => {
     if (movieDetail.state === "ready") {
@@ -231,6 +276,73 @@ function MovieDetail(props) {
                 
             <div className="gallery-tab">
             <i class="fa-solid fa-angles-up fa-bounce" onclick={gallerySwitcher}></i>
+            <div className="left-tab">
+              <div className="player">
+                <div className="streaming-player">
+                  <Show when={streamingUrl()===""}>
+                    <img src={
+                  "https://image.tmdb.org/t/p/original" +
+                  movieDetail()["data"]["poster_path"]
+                } alt="" />
+                
+                  </Show>
+                  <Show when={streamingUrl()!==""}>
+                  <iframe src={streamingUrl()} frameborder="0" scrolling="no" allowfullscreen></iframe>
+                  </Show>
+                </div>
+                <div className="btns">
+                <Show when={movieUrls.state==='ready'}>
+              <Motion.div
+              initial={{
+                scale:0
+              }}
+              animate={{
+                scale:1
+              }}
+              transition={{
+                duration:0.4,
+                easing:'ease-in-out'
+              }}
+               className="stream">
+              <button class="details" onClick={showServer}>Watch Now</button>
+              <Show when={showServers()}>
+                <For each={movieUrls()['data']}>{(url,i)=>{
+                  return <Motion.div
+                  initial={{
+                    opacity:0
+                  }}   
+                  animate={{
+                    opacity:1
+                  }}
+                  transition={{
+                    duration:0.4,
+                    easing:'ease-in-out'
+                  }}
+                  class="servers"
+                  >
+                    <p onClick={streamingSwitcher} id={i()}>Server {i()+1}</p>
+                  </Motion.div>
+                }}
+                </For>
+              </Show>
+              </Motion.div>
+              </Show>
+              <Show when={movieTrailer.state==='ready'}>
+              <Motion.button
+              initial={{
+                scale:0
+              }}
+              animate={{
+                scale:1
+              }}
+              transition={{
+                duration:0.4,
+                easing:'ease-in-out'
+              }}
+               class="add" onClick={playTrailer}>Trailer</Motion.button>
+              </Show>
+                </div>
+              </div>
             <Motion.div
             initial={{
                 opacity:0,
@@ -258,6 +370,68 @@ function MovieDetail(props) {
                 </div>
                 
             </Motion.div>
+            </div>
+            <div className="right-tab">
+              <div className="tabs">
+                <button onclick={tabSelector} id="cast">Cast</button>
+                <button onClick={tabSelector} id="crew">Crew</button>
+              </div>
+              <div className="tab-content">
+              <Show when={movieCast.state==='ready'}>
+                    <Show when={tab()==="cast"}>
+                    <For each={movieCast()['data']['cast']}>{
+                        (cast)=>{
+                            return <Motion.div
+                            initial={{
+                                scale:0
+                            }}
+                            animate={{
+                                scale:1
+                            }}
+                            transition={{
+                                duration:.6,
+                                easing:'ease-in-out'
+                            }}
+                             className="cast">
+                                <img src={
+                                  cast['profile_path']===null?"https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg" :
+                      "https://image.tmdb.org/t/p/w500" +
+                      cast['profile_path']
+                    } alt="" />
+                                <p>{cast['name']}</p>
+                            </Motion.div>
+                        }
+                    }</For>
+                    </Show>
+                    <Show when={tab()==="crew"}>
+                    <For each={movieCast()['data']['crew']}>{
+                        (cast)=>{
+                            return <Motion.div
+                            initial={{
+                                scale:0
+                            }}
+                            animate={{
+                                scale:1
+                            }}
+                            transition={{
+                                duration:.6,
+                                easing:'ease-in-out'
+                            }}
+                             className="cast">
+                                <img src={
+                                  cast['profile_path']===null?"https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg" :
+                      "https://image.tmdb.org/t/p/w500" +
+                      cast['profile_path']
+                    } alt="" />
+                                <p>{cast['name']}</p>
+                            </Motion.div>
+                        }
+                    }</For>
+                    </Show>
+                </Show>
+              </div>
+            </div>
+            
             <Motion.div
             initial={{
                 right:'-45vw'
@@ -266,7 +440,7 @@ function MovieDetail(props) {
                 right:'0'
             }}
             transition={{
-                duration:.8,
+                duration:.4,
                 easing:'ease-in-out'
             }}
              className="bottom-title">
