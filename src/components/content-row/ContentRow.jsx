@@ -165,11 +165,11 @@ function ContentRow(prop) {
             animate={{
               "z-index": "5",
               position: "fixed",
-              width: `100vw`,
-              height: "100vh",
-              "border-radius": "2px",
-              left: `0px`,
-              top: `0px`,
+              width: `100%`,
+              height: "100%",
+              "border-radius": "20px",
+              left: `15vw`,
+              top: `5vh`,
             }}
             transition={{
               duration: 0.5,
@@ -185,7 +185,7 @@ function ContentRow(prop) {
                 position: "absolute",
                 top: "0",
                 left: "0",
-                "border-radius": "2px",
+                "border-radius": "20px",
                 "z-index": 0,
                 "object-fit": "cover",
                 "object-position": `${objPos()}`,

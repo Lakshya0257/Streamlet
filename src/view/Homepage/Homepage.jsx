@@ -186,7 +186,11 @@ function Homepage() {
               icon={"fa-solid fa-arrow-trend-up"}
               title={"Search"}
             ></Heading> */}
-            <Search></Search>
+            {/* <Search></Search> */}
+            <Heading
+              icon={"fa-solid fa-arrow-trend-up"}
+              title={"Trending Now"}
+            ></Heading>
           </Motion.div>
         </Show>
         <Show when={topMovieDetail()}>

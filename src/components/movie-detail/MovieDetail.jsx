@@ -154,9 +154,11 @@ function MovieDetail(props) {
           "z-index": 1,
           "background-color": "rgba(0, 0, 0, 0.7)",
           width: "0px",
+          "border-top-left-radius": "0px"
         }}
         animate={{
           width: "100vw",
+          "border-top-left-radius": "20px"
         }}
         exit={{
           opacity:"0",
@@ -290,10 +292,81 @@ function MovieDetail(props) {
                 
                   </Show>
                   <Show when={streamingUrl()!==""}>
-                  <iframe src={streamingUrl()} frameborder="0" scrolling="no" allowfullscreen></iframe>
+                  <iframe src={streamingUrl()} frameborder="0" scrolling="no" allowfullscreen sandbox="allow-same-origin allow-scripts"></iframe>
                   </Show>
                 </div>
-                <div className="btns">
+                <div className="cast-div">
+                  <h1>Cast : </h1>
+                  <Show when={movieCast.state === 'ready'}>
+  <Show when={tab() === 'cast'}>
+    <For each={movieCast()['data']['cast'].slice(0, 3)}>
+      {(cast) => (
+        <Motion.div
+          initial={{
+            scale: 0,
+          }}
+          animate={{
+            scale: 1,
+          }}
+          transition={{
+            duration: 0.6,
+            easing: 'ease-in-out',
+          }}
+          className="cast"
+        >
+          <img
+            src={
+              cast['profile_path'] === null
+                ? 'https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg'
+                : 'https://image.tmdb.org/t/p/w500' + cast['profile_path']
+            }
+            alt=""
+          />
+          <p>{cast['name']}</p>
+        </Motion.div>
+      )}
+    </For>
+  </Show>
+</Show>
+
+                </div>
+                
+              </div>
+            {/* <Motion.div
+            initial={{
+                opacity:0,
+            }}
+            animate={{
+                opacity:1
+            }}
+            transition={{
+                duration:2,
+                easing:'ease-in-out'
+            }}
+             className="slide-track">
+                <div className="slide">
+                <For each={gallaryData()['data']['backdrops']}>{(image)=>{
+                    return  <img
+                    src={
+                      "https://image.tmdb.org/t/p/original" +
+                      image['file_path']
+                    }
+                    alt=""
+                  />
+                }}
+
+                </For>
+                </div>
+                
+            </Motion.div> */}
+            </div>
+            <div className="right-tab">
+            <h1>
+                {movieDetail()["data"]["tagline"] === ""
+                  ? movieDetail()["data"]["title"]
+                  : movieDetail()["data"]["tagline"]}
+              </h1>
+              <div className="btns">
                 <Show when={movieUrls.state==='ready'}>
               <Motion.div
               initial={{
@@ -345,37 +418,7 @@ function MovieDetail(props) {
                class="add" onClick={playTrailer}>Trailer</Motion.button>
               </Show>
                 </div>
-              </div>
-            {/* <Motion.div
-            initial={{
-                opacity:0,
-            }}
-            animate={{
-                opacity:1
-            }}
-            transition={{
-                duration:2,
-                easing:'ease-in-out'
-            }}
-             className="slide-track">
-                <div className="slide">
-                <For each={gallaryData()['data']['backdrops']}>{(image)=>{
-                    return  <img
-                    src={
-                      "https://image.tmdb.org/t/p/original" +
-                      image['file_path']
-                    }
-                    alt=""
-                  />
-                }}
-
-                </For>
-                </div>
-                
-            </Motion.div> */}
-            </div>
-            <div className="right-tab">
-              <div className="tabs">
+              {/* <div className="tabs">
                 <button onclick={tabSelector} id="cast">Cast</button>
                 <button onClick={tabSelector} id="crew">Crew</button>
               </div>
@@ -432,7 +475,7 @@ function MovieDetail(props) {
                     }</For>
                     </Show>
                 </Show>
-              </div>
+              </div> */}
             </div>
             
             <Motion.div

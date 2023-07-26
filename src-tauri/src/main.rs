@@ -82,7 +82,7 @@ async fn get_data(apiType: String, id: Option<String>) -> Result<Value, ()> {
             repository::movies_list::movies_list::popular(client)
                     .await;
             Result::Ok(value)
-        }
+ }
 
         //Getting invalid request from front-end side
         _ => Result::Ok(json!({
