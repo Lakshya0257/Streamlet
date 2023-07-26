@@ -3,6 +3,7 @@ pub mod endpoints {
     //All endpoints are defined here
     pub const HOMEPAGE: &str = "https://api.themoviedb.org/3/trending/movie/day";
     pub const TOPRATED: &str = "https://api.themoviedb.org/3/movie/top_rated";
+    pub const POPULAR: &str = "https://api.themoviedb.org/3/movie/popular";
     pub const BASEURL: &str = "https://api.themoviedb.org/3/movie/";
     pub const SEARCHMOVIE: &str = "https://api.themoviedb.org/3/search/movie";
 }
