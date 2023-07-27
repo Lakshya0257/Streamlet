@@ -22,8 +22,8 @@
       
       <div class="btns">
         <div class="search-bar">
-          <input class="search-input" id='search' type="text" placeholder='Search movie here'/>
-          <i class="fa-solid fa-magnifying-glass" style="color: #f5f5f5;"></i>
+          <input class="search-input" id='search' type="text" placeholder='Search movie here' autocomplete="off"/>
+          <i class="fa-solid fa-magnifying-glass" id="search-icon" style="color: #f5f5f5;"></i>
         </div>
         <button>Homepage</button>
                 <button>Movies</button>
@@ -46,6 +46,13 @@
 
     <script src="/src/index.jsx" type="module"></script>
     <script src="./window.js" type="module"></script>
+    <script>
+      // Dispatch the custom event when the button is clicked
+      document.getElementById("search-icon").addEventListener("click", () => {
+        const customEvent = new CustomEvent("search");
+        document.dispatchEvent(customEvent);
+      });
+    </script>
     <!-- <script src="./src/animation/row-animation.js" type="module" defer></script> -->
   </body>
   

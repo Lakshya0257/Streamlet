@@ -75,9 +75,14 @@ i {
 
 
 .search-input {
+  outline: none;
   width: 80%;
   height: 100%;
   border: none;
   background-color: transparent;
   color: grey;
+}
+
+.search-input:focus{
+  background-color: transparent;
 }
