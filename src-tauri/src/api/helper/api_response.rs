@@ -13,7 +13,7 @@ pub mod enum_response {
                     StatusCode::OK => {
 
                         //Parse the response to json and return with success status
-                        let api_data: serde_json::Value =
+                        let api_data: Value =
                             serde_json::from_str(&response.text().await.unwrap()).unwrap();
                         json!({
                             "status": "success",
