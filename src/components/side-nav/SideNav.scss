@@ -9,6 +9,7 @@
     display: flex;
 
     .selectors{
+        background-color: rgb(13, 13, 13);
         height: 100%;
         width: 30%;
         // background-color: black;
@@ -32,6 +33,11 @@
     }
 
     .tabs{
+
+        .active{
+            border-left: 4px solid rgb(255, 0, 0);
+            color: white;
+        }
         hr{
             margin: 2vh 0;
             border-top: none;

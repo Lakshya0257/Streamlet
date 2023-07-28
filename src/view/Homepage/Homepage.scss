@@ -1,179 +1,194 @@
+// Variables
+$leftMargin: 15vw;
+$topMargin: 5vh;
+$borderRadius: 20px;
+$primaryColor: red;
+$darkColor: rgb(40, 40, 40);
+$fontColorGray: grey;
+$fontColorLightGray: rgba(0, 0, 0, 0.178);
+$backgroundGradient: linear-gradient(180deg, $fontColorLightGray, black 100%);
+$thumbnailHeight: 380px;
+$topInfoWidth: 50%;
+$topRatedHeight: 400px;
+$topRatedWidth: 50%;
+$buttonTransitionDuration: 0.3s;
+$boxShadowColor: rgba(255, 0, 0, 0.69);
+
+// Reusable Mixins
+@mixin centerFlex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Main styles
 .layout {
-    // width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 5vh;
-    left: 15vw;
-    right: 0;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    
+  height: 100vh;
+  position: fixed;
+  top: $topMargin;
+  left: $leftMargin;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
 
-    .top-layer {
-        border-top-left-radius: 20px;
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0.178), rgb(0, 0, 0) 100%);
-        background-color: rgba(0, 0, 0, 0);
-        // background: linear-gradient(180deg, transparent 0%, black 100%);
-        width: 100%;
-        height: 80%;
-        transition: background-color 0.1s ease-in-out;
-    }
+  .top-layer {
+    border-top-left-radius: $borderRadius;
+    background: $backgroundGradient;
+    width: 100%;
+    height: 80%;
+    transition: background-color 0.1s ease-in-out;
+  }
 
-    .bottom-layer {
-        background-color: black;
-        width: 100%;
-        height: 20%;
-    }
+  .bottom-layer {
+    background-color: black;
+    width: 100%;
+    height: 20%;
+  }
 }
 
 .content {
-    position: fixed;
-    top: 5vh;
-    margin-left: 15vw;
-    right: 0;
-    height: 100vh;
-    z-index: 2;
-    overflow-y: auto;
+  position: fixed;
+  top: $topMargin;
+  margin-left: $leftMargin;
+  right: 0;
+  height: 100vh;
+  z-index: 2;
+  overflow-y: auto;
 
-    .top-rated {
-        margin: 0 4vw;
-        height: 400px;
-        display: flex;
-        justify-content: center;
-        position: relative;
-        align-items: center;
+  .top-rated {
+    margin: 0 4vw;
+    height: $topRatedHeight;
+    @include centerFlex;
+    position: relative;
+    align-items: center;
 
-        .backdrop{
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            filter: brightness(20%);
-        }
-
-        img {
-            width: fit-content;
-            height: 380px;
-            object-fit: cover;
-            border-radius: 20px;
-            margin-right: 5%;
-        }
-
-        .content-div {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-            width: 50%;
-            height: 100%;
-            .top-bar {
-                display: flex;
-                align-items: center;
-
-                .bar-content {
-                    width: 80%;
-
-                    h2 {
-                        font-size: 2.5rem;
-                    }
-
-                    p {
-                        font-size: 1.1rem;
-                        color: grey;
-                    }
-                }
-
-                .genre {
-                    display: flex;
-
-                    div {
-                        margin-right: 10px;
-                        padding:4px 10px;
-                        // border: 1px solid red;
-                        background-color: rgba(255, 0, 0, 0.673);
-                        // height: 50px;
-                        border-radius: 15px;
-                        font-size: .7rem;
-                    }
-                }
-            }
-
-            .des{
-                max-width: 80%;
-                color: grey;
-                font-size: .9rem;
-            }
-        }
+    .backdrop {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      filter: brightness(20%);
     }
 
-    .top-info {
-        margin-top: 20vh;
-        margin-left: 15vw;
-        width: 50%;
-        min-height: 50vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
-        align-items: start;
-
-        h1 {
-            font-size: 3.5rem;
-        }
-
-        .des {
-            color: grey;
-            line-height: 30px;
-        }
-
-        .btn {
-            button {
-                width: 140px;
-                height: 40px;
-                border-radius: 20px;
-                transition: 0.3s ease-in-out width, 0.3s ease-in-out height;
-            }
-
-            button:hover {
-                color: black;
-                width: 150px;
-                height: 50px;
-            }
-
-            .details {
-                -webkit-box-shadow: -1px 1px 49px 1px rgba(255, 0, 0, 0.69);
-                -moz-box-shadow: -1px 1px 49px 1px rgba(255, 0, 0, 0.69);
-                box-shadow: -1px 1px 49px 1px rgba(255, 0, 0, 0.363);
-                background-color: red;
-                margin-right: 30px;
-            }
-
-            .add {
-                background-color: rgb(40, 40, 40);
-                color: white;
-            }
-
-            .add:hover {
-                color: white;
-            }
-        }
+    img {
+      width: fit-content;
+      height: $thumbnailHeight;
+      object-fit: cover;
+      border-radius: $borderRadius;
+      margin-right: 5%;
     }
+
+    .content-div {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      width: $topRatedWidth;
+      height: 100%;
+
+      .top-bar {
+        @include centerFlex;
+
+        .bar-content {
+          width: 80%;
+
+          h2 {
+            font-size: 2.5rem;
+          }
+
+          p {
+            font-size: 1.1rem;
+            color: $fontColorGray;
+          }
+        }
+
+        .genre {
+          display: flex;
+
+          div {
+            margin-right: 10px;
+            padding: 4px 10px;
+            background-color: $primaryColor;
+            border-radius: 15px;
+            font-size: 0.7rem;
+          }
+        }
+      }
+
+      .des {
+        max-width: 80%;
+        color: $fontColorGray;
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .top-info {
+    margin-top: 20vh;
+    margin-left: $leftMargin;
+    width: $topInfoWidth;
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: start;
+
+    h1 {
+      font-size: 3.5rem;
+    }
+
+    .des {
+      color: $fontColorGray;
+      line-height: 30px;
+    }
+
+    .btn {
+      button {
+        width: 140px;
+        height: 40px;
+        border-radius: 20px;
+        transition: width $buttonTransitionDuration ease-in-out, height $buttonTransitionDuration ease-in-out;
+      }
+
+      button:hover {
+        color: black;
+        width: 150px;
+        height: 50px;
+      }
+
+      .details {
+        box-shadow: -1px 1px 49px 1px $boxShadowColor;
+        background-color: $primaryColor;
+        margin-right: 30px;
+      }
+
+      .add {
+        background-color: $darkColor;
+        color: white;
+      }
+
+      .add:hover {
+        color: white;
+      }
+    }
+  }
 }
 
 .image {
-    z-index: 0;
-    position: fixed;
-    top: 5vh;
-    left: 15vw;
-    width: 100vw;
-    height: 100vh;
+  z-index: 0;
+  position: fixed;
+  top: $topMargin;
+  left: $leftMargin;
+  width: 100vw;
+  height: 100vh;
 
-    img {
-        border-radius: 20px;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: 0% 20%;
-    }
+  img {
+    border-radius: $borderRadius;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 0% 20%;
+  }
 }

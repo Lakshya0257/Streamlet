@@ -24,6 +24,7 @@
   "dependencies": {
     "@motionone/solid": "^10.16.2",
     "@solid-primitives/event-bus": "^1.0.7",
+    "@solidjs/router": "^0.8.2",
     "@tauri-apps/api": "^1.4.0",
     "solid-js": "^1.7.6"
   }

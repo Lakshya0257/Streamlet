@@ -3,18 +3,15 @@ import ContentRow from "../../components/content-row/ContentRow";
 import { Motion, Presence } from "@motionone/solid";
 import Heading from "../../components/Heading/Heading";
 import MovieDetail from "../../components/movie-detail/MovieDetail";
-import Search from "../../components/search/Search";
 import {
   createSignal,
   createResource,
-  Match,
   Show,
-  onCleanup,
   createEffect,
-  onMount,
   For,
 } from "solid-js";
 import { invoke } from "@tauri-apps/api";
+import Loading from "../../components/loader/Loading";
 
 function Homepage() {
   const [topMovieDetail, setMovieDetail] = createSignal(false);
@@ -72,136 +69,163 @@ function Homepage() {
   });
 
   return (
-    <Show when={data.state === "ready"}>
-      <div>
-        <div className="image">
-          <img
-            src={
-              "https://image.tmdb.org/t/p/original" +
-              data()["data"]["results"][0]["backdrop_path"]
-            }
-            alt="Movie1"
-          />
-          {/* <Switch fallback={<div>Not Found</div>}>
-            <Match when={data.state === 'pending' || data.state === 'unresolved'}>
-          Loading...
-        </Match>
-            <Match when={data.state === 'ready'}>
-                <img src={"https://image.tmdb.org/t/p/w500"+data.results[0]['poster_path']} alt="Movie1" />
-                </Match>
-            </Switch> */}
-        </div>
-        <Show when={!topMovieDetail()}>
-          <Motion.div
-            initial={{
-              width: "0",
-            }}
-            animate={{
-              width: "100vw",
-            }}
-            exit={{
-              width: "0",
-            }}
-            transition={{
-              duration: 0.5,
-              easing: "ease-in-out",
-            }}
-            class="layout"
-          >
-            <div className="top-layer" id="hpl"></div>
-            <div className="bottom-layer"></div>
-          </Motion.div>
-          <Motion.div
-            initial={{
-              left: "100vw",
-            }}
-            animate={{
-              left: "0",
-            }}
-            exit={{
-              left: "100vw",
-            }}
-            transition={{
-              duration: 0.8,
-              easing: "ease-in-out",
-            }}
-            class="content"
-            id="hpc"
-          >
-            <div className="top-info">
-              <p>Popularity : {data()["data"]["results"][0]["popularity"]}</p>
-              <p>⭐ {data()["data"]["results"][0]["vote_average"]}</p>
-              <h1>{data()["data"]["results"][0]["original_title"]}</h1>
-              <p class="des">{data()["data"]["results"][0]["overview"]}</p>
-              <div className="btn">
-                <button class="details" onClick={movieDetailClick}>
-                  Watch Now
-                </button>
-                <button class="add">+ Add List</button>
-              </div>
-            </div>
-            <Heading
-              icon={"fa-solid fa-arrow-trend-up"}
-              title={"Trending Now"}
-            ></Heading>
-            <ContentRow content={data()["data"]["results"]}></ContentRow>
-            <Show when={top_rated.state === "ready"}>
-              <Heading title={"Top Rated"}></Heading>
-              <div className="top-rated">
-                <img
-                  class="backdrop"
-                  src={
-                    "https://image.tmdb.org/t/p/original" +
-                    top_rated()["data"]["backdrop_path"]
-                  }
-                  alt=""
-                />
-                <img
-                  src={
-                    "https://image.tmdb.org/t/p/original" +
-                    top_rated()["data"]["poster_path"]
-                  }
-                  alt=""
-                />
-                <div className="content-div">
-                  <div className="top-bar">
-                    <div className="bar-content">
-                      <h2>{top_rated()["data"]["title"]}</h2>
-                      <p>"{top_rated()["data"]["tagline"]}"</p>
-                    </div>
-                    <div className="genre">
-                      <For each={top_rated()["data"]["genres"]}>
-                        {(genre) => {
-                          return <div>{genre["name"]}</div>;
-                        }}
-                      </For>
-                    </div>
-                  </div>
-                  <p class="des">{top_rated()["data"]["overview"]}</p>
-                  <p>⭐ {top_rated()["data"]["vote_average"]}</p>
+    <>
+      <Presence>
+        <Show when={data.state === "pending"}>
+          <Loading></Loading>
+        </Show>
+      </Presence>
+      <Show when={data.state === "ready"}>
+        <div>
+          <div className="image">
+            <img
+              src={
+                "https://image.tmdb.org/t/p/original" +
+                data()["data"]["results"][0]["backdrop_path"]
+              }
+              alt="Movie1"
+            />
+          </div>
+          <Show when={!topMovieDetail()}>
+            <Motion.div
+              initial={{
+                width: "0",
+              }}
+              animate={{
+                width: "100vw",
+              }}
+              exit={{
+                width: "0",
+              }}
+              transition={{
+                duration: 0.5,
+                easing: "ease-in-out",
+              }}
+              class="layout"
+            >
+              <div className="top-layer" id="hpl"></div>
+              <div className="bottom-layer"></div>
+            </Motion.div>
+            <Motion.div
+              initial={{
+                left: "100vw",
+              }}
+              animate={{
+                left: "0",
+              }}
+              exit={{
+                left: "100vw",
+              }}
+              transition={{
+                duration: 0.8,
+                easing: "ease-in-out",
+              }}
+              class="content"
+              id="hpc"
+            >
+              <div className="top-info">
+                <p>Popularity : {data()["data"]["results"][0]["popularity"]}</p>
+                <p>⭐ {data()["data"]["results"][0]["vote_average"]}</p>
+                <h1>{data()["data"]["results"][0]["original_title"]}</h1>
+                <p class="des">{data()["data"]["results"][0]["overview"]}</p>
+                <div className="btn">
+                  <button class="details" onClick={movieDetailClick}>
+                    Watch Now
+                  </button>
+                  <button class="add">+ Add List</button>
                 </div>
               </div>
-            </Show>
-            {/* <Heading
-              icon={"fa-solid fa-arrow-trend-up"}
-              title={"Search"}
-            ></Heading> */}
-            <Search></Search>
-            <Heading
-              icon={"fa-solid fa-arrow-trend-up"}
-              title={"Trending Now"}
-            ></Heading>
-          </Motion.div>
-        </Show>
-        <Show when={topMovieDetail()}>
-          <MovieDetail
-            onChildClick={movieDetailClick}
-            id={data()["data"]["results"][0]["id"].toString()}
-          ></MovieDetail>
-        </Show>
-      </div>
-      
-    </Show>
+              <Heading
+                icon={"fa-solid fa-arrow-trend-up"}
+                title={"Trending Now"}
+              ></Heading>
+              <ContentRow content={data()["data"]["results"]}></ContentRow>
+              <Show when={top_rated.state === "ready"}>
+                <Heading title={"Top Rated"}></Heading>
+                <div className="top-rated">
+                  <img
+                    class="backdrop"
+                    src={
+                      "https://image.tmdb.org/t/p/original" +
+                      top_rated()["data"]["backdrop_path"]
+                    }
+                    alt=""
+                  />
+                  <img
+                    src={
+                      "https://image.tmdb.org/t/p/original" +
+                      top_rated()["data"]["poster_path"]
+                    }
+                    alt=""
+                  />
+                  <div className="content-div">
+                    <div className="top-bar">
+                      <div className="bar-content">
+                        <h2>{top_rated()["data"]["title"]}</h2>
+                        <p>"{top_rated()["data"]["tagline"]}"</p>
+                      </div>
+                      <div className="genre">
+                        <For each={top_rated()["data"]["genres"]}>
+                          {(genre) => {
+                            return <div>{genre["name"]}</div>;
+                          }}
+                        </For>
+                      </div>
+                    </div>
+                    <p class="des">{top_rated()["data"]["overview"]}</p>
+                    <p>⭐ {top_rated()["data"]["vote_average"]}</p>
+                  </div>
+                </div>
+              </Show>
+              <Heading
+                icon={"fa-solid fa-arrow-trend-up"}
+                title={"Trending Now"}
+              ></Heading>
+            </Motion.div>
+          </Show>
+          <Show when={topMovieDetail()}>
+            <Motion.div
+              initial={{
+                "z-index": "10",
+                position: "fixed",
+                width: `250px`,
+                height: "200px",
+                "border-radius": "2px",
+                left: `100vw`,
+                top: `5vh`,
+              }}
+              exit={{
+                "z-index": "10",
+                position: "fixed",
+                width: `250px`,
+                height: "200px",
+                "border-radius": "2px",
+                left: `100vw`,
+                top: `5vh`,
+              }}
+              animate={{
+                "z-index": "10",
+                position: "fixed",
+                width: `100%`,
+                height: "100%",
+                "border-radius": "20px",
+                left: `15vw`,
+                top: `5vh`,
+              }}
+              transition={{
+                duration: 0.5,
+                easing: "ease-in-out",
+              }}
+            >
+              <MovieDetail
+                onChildClick={movieDetailClick}
+                id={data()["data"]["results"][0]["id"].toString()}
+              ></MovieDetail>
+            </Motion.div>
+          </Show>
+        </div>
+      </Show>
+    </>
   );
 }
 

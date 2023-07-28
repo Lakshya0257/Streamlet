@@ -1,5 +1,14 @@
 import './SideNav.scss'
-const SideNav=()=>{
+import { useNavigate, useMatch } from "@solidjs/router";
+function SideNav(){
+    const home = useMatch(() => "/");
+    const navigate = useNavigate();
+    function handleButtonClick(route) {
+    
+        // Navigate to the specified route
+        navigate(route);
+      }
+    
     return (
         <div class="side-nav">
             <div className="selectors">
@@ -12,9 +21,9 @@ const SideNav=()=>{
             </div>
             <div className="tabs">
                 <h1>Tabs</h1>
-                <button>
+                <button  classList={{ active: Boolean(home()) }} onClick={() => handleButtonClick("/")} >
                 <i class="fa-solid fa-house"></i>
-                <p>Explore</p>
+                <p>Home</p>
                 </button>
                 <button>
                 <i class="fa-regular fa-circle-play"></i>
