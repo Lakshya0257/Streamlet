@@ -187,30 +187,30 @@ function Homepage() {
             <Motion.div
               initial={{
                 "z-index": "10",
-                position: "fixed",
+                position: "absolute",
+                top: 0,
                 width: `250px`,
                 height: "200px",
                 "border-radius": "2px",
                 left: `100vw`,
-                top: `5vh`,
               }}
               exit={{
                 "z-index": "10",
-                position: "fixed",
+                position: "absolute",
+                top: 0,
                 width: `250px`,
                 height: "200px",
                 "border-radius": "2px",
                 left: `100vw`,
-                top: `5vh`,
               }}
               animate={{
                 "z-index": "10",
-                position: "fixed",
+                position: "absolute",
+                top: 0,
+                left: 0,
                 width: `100%`,
                 height: "100%",
                 "border-radius": "20px",
-                left: `15vw`,
-                top: `5vh`,
               }}
               transition={{
                 duration: 0.5,

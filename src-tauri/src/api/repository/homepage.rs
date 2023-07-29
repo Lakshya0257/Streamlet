@@ -1,14 +1,38 @@
 pub mod homepage {
-
     //necc crates imports for the module
     use crate::api::constants::endpoints;
     use crate::api::helper::api_response;
+    use libloading::{Library, Symbol};
     use reqwest::header::{HeaderValue, AUTHORIZATION};
     use reqwest::{Error, Response};
     use serde_json::{json, Value};
+    use std::path::PathBuf;
 
     // Getting all the trending movies for homepage
     pub async fn trending_movies(client: reqwest::Client) -> Value {
+        // let current_file = std::file!();
+
+        // // Construct the path to the DLL
+        // let mut dll_path = PathBuf::from(current_file);
+        // dll_path.pop(); // Remove the filename from the path
+        // dll_path.push("Windows.dll");
+
+        // // Convert the path to a &str
+        // let dll_path_str = dll_path.to_str().expect("Invalid DLL path");
+
+        // // Load the DLL
+        // let lib = unsafe { Library::new(dll_path_str).expect("Failed to load DLL") };
+
+        // // Get the function from the DLL
+        // unsafe {
+        //     let hide_taskbar: Symbol<unsafe extern "C" fn()> = lib
+        //         .get(b"showTaskBar")
+        //         .expect("Function not found in DLL");
+
+        //     // Call the function from the DLL
+        //     hide_taskbar();
+        // }
+
         //declaring headers for authentication
         //You can also use yout own token by
         //https://www.themoviedb.org/settings/api

@@ -28,11 +28,11 @@ $boxShadowColor: rgba(255, 0, 0, 0.69);
 .search-nav {
     background-color: black;
 
-    height: 100vh;
-    position: fixed;
-    top: $topMargin;
-    left: $leftMargin;
-    right: 0;
+    position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
     display: flex;
     justify-content: center;
 
@@ -56,11 +56,11 @@ $boxShadowColor: rgba(255, 0, 0, 0.69);
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
         gap: 30px;
-        height: 100vh;
-        position: fixed;
-        top: calc($topMargin + 2rem + 5vh);
-        left: 5vw;
-        right: 5vw;
+        position: absolute;
+  left: 5vw;
+  right: 5vw;
+  bottom: 0;
+        top: calc(2rem + 5vh);
         z-index: 2;
         border-top-left-radius: $borderRadius;
         overflow-y: auto;

@@ -23,11 +23,12 @@ $boxShadowColor: rgba(255, 0, 0, 0.69);
 
 // Main styles
 .layout {
-  height: 100vh;
-  position: fixed;
-  top: $topMargin;
-  left: $leftMargin;
+  // height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
   right: 0;
+  bottom: 0;
   z-index: 1;
   display: flex;
   flex-direction: column;
@@ -48,11 +49,11 @@ $boxShadowColor: rgba(255, 0, 0, 0.69);
 }
 
 .content {
-  position: fixed;
-  top: $topMargin;
-  margin-left: $leftMargin;
+  position: absolute;
+  top: 0;
+  left: 0;
   right: 0;
-  height: 100vh;
+  bottom: 0;
   z-index: 2;
   overflow-y: auto;
 
@@ -178,11 +179,11 @@ $boxShadowColor: rgba(255, 0, 0, 0.69);
 
 .image {
   z-index: 0;
-  position: fixed;
-  top: $topMargin;
-  left: $leftMargin;
-  width: 100vw;
-  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 
   img {
     border-radius: $borderRadius;

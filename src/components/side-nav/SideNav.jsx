@@ -26,9 +26,10 @@ function SideNav(){
                 <p>Home</p>
                 </button>
                 <button>
-                <i class="fa-regular fa-circle-play"></i>
-                <p>To watch</p>
+                <i class="fa-regular fa-star"></i>
+                <p>Top Rated</p>
                 </button>
+                
                 <button>
                 <i class="fa-regular fa-clock"></i>
                 <p>Coming soon</p>
@@ -40,12 +41,12 @@ function SideNav(){
                 <p>Playlist</p>
                 </button>
                 <button>
-                <i class="fa-regular fa-star"></i>
-                <p>Top Rated</p>
+                <i class="fa-regular fa-circle-play"></i>
+                <p>To watch</p>
                 </button>
                 <button>
                 <i class="fa-solid fa-download"></i>
-                <p>Downloaded</p>
+                <p>Downloads</p>
                 </button>
                 <hr />
                 <button>

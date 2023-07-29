@@ -23,6 +23,14 @@ body {
     
 }
 
+.middle-main{
+  position: fixed;
+  left: 15vw;
+  top: 5vh;
+  right: 0;
+  bottom: 0;
+}
+
 p{
   font-size: 0.9rem;
 }

@@ -13,7 +13,6 @@ function MovieDetail(props) {
   console.log(props.id);
   const [showcontent, setShowContent] = createSignal(false);
   const [showGallery, setShowGallery] = createSignal(false);
-  const [streaming, setStreaming] = createSignal(false);
   const [streamingUrl, setStreamingUrl] = createSignal("");
   const [showServers, setShowServers] = createSignal(false);
   const [tab, selectTab] = createSignal("cast");
@@ -40,6 +39,16 @@ function MovieDetail(props) {
   }
 
   function gallerySwitcher() {
+    const element = document.documentElement;
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) {
+      element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullscreen) {
+      element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) {
+      element.msRequestFullscreen();
+    }
     setShowGallery(!showGallery());
   }
 
@@ -115,6 +124,8 @@ function MovieDetail(props) {
     }
   });
 
+  
+
   return (
     <>
       <Presence>
@@ -141,7 +152,7 @@ function MovieDetail(props) {
               "border-top-left-radius": "0px",
             }}
             animate={{
-              width: "100vw",
+              width: "100%",
               "border-top-left-radius": "20px",
             }}
             exit={{
@@ -282,7 +293,7 @@ function MovieDetail(props) {
                             frameborder="0"
                             scrolling="no"
                             allowfullscreen
-                            sandbox="allow-same-origin allow-scripts"
+                            // sandbox="allow-same-origin allow-scripts"
                           ></iframe>
                         </Show>
                       </div>
