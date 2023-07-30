@@ -2,6 +2,7 @@ import './SideNav.scss'
 import { useNavigate, useMatch } from "@solidjs/router";
 function SideNav(){
     const home = useMatch(() => "/");
+    const topRated = useMatch(() => "/top-rated");
     const navigate = useNavigate();
     function handleButtonClick(route) {
     
@@ -25,7 +26,7 @@ function SideNav(){
                 <i class="fa-solid fa-house"></i>
                 <p>Home</p>
                 </button>
-                <button>
+                <button classList={{ active: Boolean(topRated()) }} onClick={() => handleButtonClick("/top-rated")}>
                 <i class="fa-regular fa-star"></i>
                 <p>Top Rated</p>
                 </button>

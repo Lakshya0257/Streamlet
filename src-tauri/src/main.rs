@@ -16,7 +16,7 @@ fn main() {
 #[tauri::command]
 // #[warn(non_snake_case)]
 //https://tauri.app/v1/guides/features/command/
-async fn get_data(apiType: String, id: Option<String>) -> Result<Value, ()> {
+async fn get_data(apiType: String, id: Option<String>,page: Option<String>) -> Result<Value, ()> {
     //client for api callings
     let client: Client = reqwest::Client::new();
     match apiType.as_str() {
@@ -29,8 +29,18 @@ async fn get_data(apiType: String, id: Option<String>) -> Result<Value, ()> {
         }
         "top_rated" => {
             println!("Getting Top Rated Movies...");
-            let value: Value = repository::movies_list::movies_list::top_rated(client).await;
-            Result::Ok(value)
+            match page{
+                Some(page) =>{
+                    let value: Value = repository::movies_list::movies_list::top_rated(client,page).await;
+                    Result::Ok(value)
+                }
+                None=>{
+                    let value: Value = repository::movies_list::movies_list::top_rated(client,String::from("1")).await;
+                    Result::Ok(value)
+                }
+            }
+            
+            
         }
         "get_movie" => {
             println!("Getting Movie Details...");

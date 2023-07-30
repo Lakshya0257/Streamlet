@@ -73,6 +73,7 @@ dependencies = [
  "tauri",
  "tauri-build",
  "tokio",
+ "winapi",
 ]
 
 [[package]]

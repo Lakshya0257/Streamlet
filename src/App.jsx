@@ -3,6 +3,7 @@ import SideNav from "./components/side-nav/SideNav";
 import { Route ,Routes } from "@solidjs/router";
 import Search from "./view/Search/Search";
 import TopBar from "./components/top-bar/TopBar";
+import TopRated from "./view/TopRated/TopRated";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
     <Routes>
       <Route path="/" component={Homepage}></Route>
       <Route path="/search" component={Search}></Route>
+      <Route path="/top-rated" component={TopRated}></Route>
     </Routes>
     </div>
     </>

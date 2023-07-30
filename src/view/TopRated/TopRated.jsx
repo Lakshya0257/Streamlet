@@ -1,4 +1,4 @@
-import "./Search.scss";
+import "./TopRated.scss"
 import { Motion, Presence } from "@motionone/solid";
 import MovieDetail from "../../components/movie-detail/MovieDetail";
 import Loading from "../../components/loader/Loading";
@@ -13,12 +13,15 @@ import {
   For,
 } from "solid-js";
 import { invoke } from "@tauri-apps/api";
-function Search() {
-  const [searchResult, setSearchResult] = createSignal({});
-  const [clicked, setClicked] = createSignal(false);
+function TopRated(){
+    const [clicked, setClicked] = createSignal(false);
   const [target, setTarget] = createSignal();
   const [bgImage, setBackgroundImage] = createSignal("");
-  const [state, setCurrentState] = createSignal("unreached");
+//   const [curPage, setCurrPage] = createSignal(1);
+
+  function topRated(page) {
+    return invoke("get_data", { apiType: "top_rated", page: page.toString() });
+  }
 
   function handleChildClick() {
     setClicked(false);
@@ -43,68 +46,54 @@ function Search() {
     });
   }
 
-  
+  const [curPage, setCurrPage] = createSignal(1);
+//   const [dataKey, setDataKey] = createSignal(curPage());
 
-  onMount(async () => {
-    await searchApi();
-    // Define the event handler for the custom event
-    const customEventHandler = (event) => {
-      const message = event.detail;
-      console.log("Custom event received:", message);
-      // Do something with the event data
-    };
-
-    // Add the event listener when the component is mounted
-    document.addEventListener("search", searchApi);
-
-    // Clean up the event listener when the component is unmounted
-  });
-  onCleanup(() => {
-    document.removeEventListener("search", () => {});
-  });
-
-  function movieDetails(ev) {
-    console.log("clicked");
-    const target = ev.currentTarget;
-    const src=target.src;
-    console.log(src);
-    let originalSrc = src.replace('/w500/', '/original/');
-    originalSrc = originalSrc.replace('/poster_path', '/backdrop_path');
-
-    setBackgroundImage(originalSrc);
-    setTarget(target);
-    setClicked(true);
+  async function topRated() {
+    const res=await invoke("get_data", { apiType: "top_rated", page: curPage().toString() });
+    console.log(res);
+    return res;
   }
 
+  // Set up the resource with the unique key that depends on the current page number
+  let [data,{ mutate, refetch }] = createResource(topRated);
 
-
-
-  async function searchApi() {
-    setCurrentState("ongoing");
-    console.log("searching...");
-    const search = document.getElementById("search");
-    var inputValue = search.value;
-    const response = await invoke("get_data", {
-      apiType: "search_movie",
-      id: inputValue,
-    });
-    setCurrentState("ready");
-    setSearchResult(response);
-    console.log(searchResult());
+  function changePage(page) {
+    console.log(page);
+    setCurrPage(parseInt(page));
+    refetch();
   }
-  return (
-    <>
+
+//   onCleanup(() => {
+//     // Cancel the resource to prevent unnecessary fetches
+//     reload.cancel();
+//   });
+
+    function movieDetails(ev) {
+        console.log("clicked");
+        const target = ev.currentTarget;
+        const src=target.src;
+        console.log(src);
+        let originalSrc = src.replace('/w500/', '/original/');
+        originalSrc = originalSrc.replace('/poster_path', '/backdrop_path');
+    
+        setBackgroundImage(originalSrc);
+        setTarget(target);
+        setClicked(true);
+      }
+    return (
+        <>
     <Presence>
-    <Show when={state()==="ongoing"}>
+    <Show when={data.state==="pending"}>
       <Loading></Loading>
     </Show>
     </Presence>
-    <Show when={Object.keys(searchResult()).length !== 0}>
-      <img class="search-bg-image" src={"https://image.tmdb.org/t/p/original"+searchResult()["data"]["results"][0]["backdrop_path"]} alt="" />
+    <Show when={data.state==="ready"}>
+    <img class="search-bg-image" src={"https://image.tmdb.org/t/p/original"+data()["data"]["results"][0]["backdrop_path"]} alt="" />
       <div class="search-nav">
-        <h1>Search Results</h1>
+        <h1>Top Rated</h1>
         <div className="content">
-          <For each={searchResult()["data"]["results"]}>
+          <For each={data()["data"]["results"]}>
             {(movie, i) => {
               return (
                 <Motion.div
@@ -137,7 +126,22 @@ function Search() {
               );
             }}
           </For>
+          
         </div>
+        <div className="page-switcher">
+
+        <button onClick={()=>changePage(1)}>Back to 1</button>
+        <button onClick={()=>changePage(curPage()===1? 1:curPage()-1)}>&lt;&lt;</button>
+        <button class="pages selected">{curPage()}</button>
+        <Show when={curPage()<parseInt(data()["data"]['total_pages']) && curPage()<500}><button onClick={()=>changePage(curPage()+1)} class="pages">{curPage()+1}</button></Show>
+        <Show when={curPage()+1<=parseInt(data()["data"]['total_pages']) && curPage()<499}><button onClick={()=>changePage(curPage()+2)} class="pages">{curPage()+2}</button></Show>
+        <Show when={curPage()+2<=parseInt(data()["data"]['total_pages']) && curPage()<498}><p>......</p></Show>
+        <Show when={curPage()+3<parseInt(data()["data"]['total_pages']) && curPage()<497}><button onClick={()=>changePage(parseInt(data()["data"]['total_pages'])-1>499? 499 : parseInt(data()["data"]['total_pages'])-1)} class="pages">{parseInt(data()["data"]['total_pages'])-1>499? 499 : parseInt(data()["data"]['total_pages'])-1}</button></Show>
+        <Show when={curPage()+4<parseInt(data()["data"]['total_pages']) && curPage()<496}><button onClick={()=>changePage(parseInt(data()["data"]['total_pages'])>500 ? 500 : parseInt(data()["data"]['total_pages']))} class="pages">{parseInt(data()["data"]['total_pages'])>500 ? 500 : parseInt(data()["data"]['total_pages'])}</button></Show>
+        <button onClick={()=>changePage(curPage()===parseInt(data()["data"]['total_pages'])?parseInt(data()["data"]['total_pages']) :curPage()===500? 500 :curPage()+1)}>&gt;</button>
+        
+      </div>
+        
       </div>
       <Presence exitBeforeEnter>
       <Show when={clicked() === true}>
@@ -192,9 +196,10 @@ function Search() {
           </Motion.div>
         </Show>
       </Presence>
+      
     </Show>
     </>
-  );
+    )
 }
 
-export default Search;
+export default TopRated;

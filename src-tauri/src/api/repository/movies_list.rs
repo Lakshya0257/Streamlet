@@ -5,13 +5,14 @@ pub mod movies_list{
     use crate::api::helper::api_response;
     use crate::api::constants::endpoints;
     //Top Rated movies
-    pub async fn top_rated(client: reqwest::Client) -> Value {
+    pub async fn top_rated(client: reqwest::Client, page: String) -> Value { 
         //declaring headers for authentication
         //You can also use yout own token by
         //https://www.themoviedb.org/settings/api
+        let endpoint = format!("{}?page={}", endpoints::endpoints::TOPRATED, page);
         let auth_header_value = HeaderValue::from_str(&format!("Bearer {}", endpoints::creds::TOKEN)).expect("Invalid header value");
         
-        let response:Result<Response,Error> = client.get(endpoints::endpoints::TOPRATED).header(AUTHORIZATION,auth_header_value).send().await;
+        let response:Result<Response,Error> = client.get(&endpoint).header(AUTHORIZATION,auth_header_value).send().await;
         api_response::enum_response::check_response(response).await
         // match response {
         //     Result::Ok(value)=>{

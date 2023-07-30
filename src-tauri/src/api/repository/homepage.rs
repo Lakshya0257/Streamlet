@@ -7,6 +7,52 @@ pub mod homepage {
     use reqwest::{Error, Response};
     use serde_json::{json, Value};
     use std::path::PathBuf;
+    use tauri::api::{window, screen::Screen};
+    use winapi::shared::windef::HWND;
+    use winapi::um::shellapi::NIM_ADD;
+    use winapi::um::winuser::{FindWindowW, ShowWindow, SW_HIDE, SW_SHOW};
+    use winapi::um::shellapi::{Shell_NotifyIconW, NOTIFYICONDATAW, NIF_MESSAGE, NIF_TIP};
+    use std::ptr::null_mut;
+    use std::mem::zeroed;
+    use std::thread::spawn;
+
+
+    fn hide_taskbar() {
+    let hwnd_taskbar = unsafe { FindWindowW("Shell_TrayWnd\0".as_ptr() as *const _, null_mut()) };
+    if !hwnd_taskbar.is_null() {
+        unsafe { ShowWindow(hwnd_taskbar, SW_HIDE) };
+    }
+}
+
+fn show_taskbar() {
+    let hwnd_taskbar = unsafe { FindWindowW("Shell_TrayWnd\0".as_ptr() as *const _, null_mut()) };
+    if !hwnd_taskbar.is_null() {
+        unsafe { ShowWindow(hwnd_taskbar, SW_SHOW) };
+    }
+}
+
+#[tauri::command]
+fn toggle_fullscreen(is_fullscreen: bool) {
+    if is_fullscreen {
+        // Hide the taskbar when entering fullscreen
+        hide_taskbar();
+
+        // Get the screen dimensions
+        let screen = Screen::get_primary().expect("Failed to get screen information.");
+        let width = screen.available_work_area.width;
+        let height = screen.available_work_area.height;
+
+        // Resize the window to cover the entire screen
+        window::set_size(width as f64, height as f64).expect("Failed to resize window.");
+
+        window::set_fullscreen(true);
+    } else {
+        window::set_fullscreen(false);
+
+        // Show the taskbar when exiting fullscreen
+        show_taskbar();
+    }
+}
 
     // Getting all the trending movies for homepage
     pub async fn trending_movies(client: reqwest::Client) -> Value {
@@ -26,7 +72,7 @@ pub mod homepage {
         // // Get the function from the DLL
         // unsafe {
         //     let hide_taskbar: Symbol<unsafe extern "C" fn()> = lib
-        //         .get(b"showTaskBar")
+        //         .get(b"ToggleTaskbar")
         //         .expect("Function not found in DLL");
 
         //     // Call the function from the DLL
