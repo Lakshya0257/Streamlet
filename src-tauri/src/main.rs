@@ -88,10 +88,19 @@ async fn get_data(apiType: String, id: Option<String>,page: Option<String>) -> R
         }
         "popular" => {
             println!("Getting popular movies...");
-            let value: Value =
-            repository::movies_list::movies_list::popular(client)
+            
+            match page{
+                Some(page) =>{
+                    let value: Value =
+            repository::movies_list::movies_list::popular(client,page)
                     .await;
             Result::Ok(value)
+                }
+                None=>{
+                    let value: Value = repository::movies_list::movies_list::popular(client,String::from("1")).await;
+                    Result::Ok(value)
+                }
+            }
  }
 
         //Getting invalid request from front-end side

@@ -28,13 +28,14 @@ pub mod movies_list{
         //     }
         // }
     }
-    pub async fn popular(client: reqwest::Client) -> Value {
+    pub async fn popular(client: reqwest::Client, page: String) -> Value {
         //declaring headers for authentication
         //You can also use yout own token by
         //https://www.themoviedb.org/settings/api
+        let endpoint = format!("{}?page={}", endpoints::endpoints::POPULAR, page);
         let auth_header_value = HeaderValue::from_str(&format!("Bearer {}", endpoints::creds::TOKEN)).expect("Invalid header value");
         
-        let response:Result<Response,Error> = client.get(endpoints::endpoints::POPULAR).header(AUTHORIZATION,auth_header_value).send().await;
+        let response:Result<Response,Error> = client.get(&endpoint).header(AUTHORIZATION,auth_header_value).send().await;
         api_response::enum_response::check_response(response).await
 }
 }

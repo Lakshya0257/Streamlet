@@ -193,3 +193,161 @@ $boxShadowColor: rgba(255, 0, 0, 0.69);
     object-position: 0% 20%;
   }
 }
+
+
+
+
+
+
+// Reusable Mixins
+@mixin image{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+// .search-bg-image{
+//   position: absolute;
+//   top: 0;
+//   right: 0;
+//   background-color: black;
+//   left: 0;
+//   bottom: 0;
+//   border-top-left-radius: $borderRadius;
+//   object-fit: cover;
+//   z-index: 0;
+//   width: 100%;
+//   height: 100%;
+//   filter: brightness(20%);
+// }
+
+.recommended-div {
+  width: 100%;
+  // height: 100vh;
+  // margin-left: 10vw;
+  //   margin-right: 10vw;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: $borderRadius;
+    .back-image {
+        @include image();
+        border-top-left-radius: $borderRadius;
+        
+        filter: brightness(0%);
+    }
+
+    .rc-content {
+      // background-color: rgba(0, 0, 0, 0.561);
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+        margin-left: 10vw;
+    margin-right: 10vw;
+        gap: 30px;
+        // width: 100%;
+        // top: calc(2rem + 5vh);
+        // z-index: 2;
+        border-radius: $borderRadius;
+        // overflow-y: auto;
+
+        .search-results {
+          
+          width: 100%;
+            // margin: 2vh 4vw;
+            // height: $topRatedHeight;
+            @include centerFlex;
+            flex-direction: column;
+        
+            img {
+              width: 100%;
+              height: fit-content;
+              max-height: 80%;
+              object-fit: cover;
+              border-radius: $borderRadius;
+              // margin-right: 5%;
+            }
+        
+            .content-div {
+              display: flex;
+              flex-direction: column;
+              justify-content: space-evenly;
+              width: 100%;
+              height: 20%;
+
+              h2 {
+                font-size: 1rem;
+              }
+    
+              p {
+                font-size: .8rem;
+                color: $fontColorGray;
+              }
+        
+              .top-bar {
+                @include centerFlex;
+        
+                .bar-content {
+                  width: 80%;
+        
+                  
+                }
+        
+                .genre {
+                  display: flex;
+        
+                  div {
+                    margin-right: 10px;
+                    padding: 4px 10px;
+                    background-color: $primaryColor;
+                    border-radius: 15px;
+                    font-size: 0.7rem;
+                  }
+                }
+              }
+        
+              .des {
+                max-width: 80%;
+                color: $fontColorGray;
+                font-size: 0.9rem;
+              }
+            }
+          }
+
+        .search-items {
+            margin-left: 10px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            min-width: 10vw;
+            transition: min-width 400ms ease-in-out;
+
+            
+            // height: 80%;
+            
+
+            img{
+                position: absolute;
+                @include image();
+                border-radius: 15px;
+                z-index: -1;
+            }
+            &:hover{
+                min-width: 30vw;
+            }
+
+            p{
+                display: flex;
+                font-size: 1.5rem;
+            }
+        }
+
+        
+
+    }
+
+}

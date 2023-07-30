@@ -49,14 +49,14 @@ function TopRated(){
   const [curPage, setCurrPage] = createSignal(1);
 //   const [dataKey, setDataKey] = createSignal(curPage());
 
-  async function topRated() {
-    const res=await invoke("get_data", { apiType: "top_rated", page: curPage().toString() });
-    console.log(res);
-    return res;
-  }
+  // async function topRated() {
+  //   const res=await invoke("get_data", { apiType: "top_rated", page: curPage().toString() });
+  //   console.log(res);
+  //   return res;
+  // }
 
   // Set up the resource with the unique key that depends on the current page number
-  let [data,{ mutate, refetch }] = createResource(topRated);
+  let [data,{ mutate, refetch }] = createResource(()=>topRated(curPage()));
 
   function changePage(page) {
     console.log(page);
