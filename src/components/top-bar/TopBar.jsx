@@ -37,7 +37,7 @@ document
 document
   .getElementById('titlebar-close')
   .addEventListener('click', () => appWindow.close())
-    })
+    }) 
 
     return (
         <div data-tauri-drag-region class="titlebar">

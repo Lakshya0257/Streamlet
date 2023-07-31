@@ -64,7 +64,8 @@
     },
     "windows": [
       {
-        "decorations": false
+        "decorations": false,
+        "fullscreen": true
       }
     ]
   }

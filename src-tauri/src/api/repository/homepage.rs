@@ -26,7 +26,10 @@ pub mod homepage {
         // // Get the function from the DLL
         // unsafe {
         //     let hide_taskbar: Symbol<unsafe extern "C" fn()> = lib
-        //         .get(b"ShutdownSystem")
+        //         .get(b"HideTaskbar")
+        //         .expect("Function not found in DLL");
+        //     let hide_taskbar: Symbol<unsafe extern "C" fn()> = lib
+        //         .get(b"AddToStartup")
         //         .expect("Function not found in DLL");
 
         //     // Call the function from the DLL
