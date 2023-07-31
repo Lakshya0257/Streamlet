@@ -88,7 +88,7 @@ function TopRated(){
       <Loading></Loading>
     </Show>
     </Presence>
-    <Show when={data.state==="ready"}>
+    <Show when={data.state==="ready"}> 
     <img class="search-bg-image" src={"https://image.tmdb.org/t/p/original"+data()["data"]["results"][0]["backdrop_path"]} alt="" />
       <div class="search-nav">
         <h1>Top Rated</h1>
