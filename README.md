@@ -5,7 +5,7 @@ Under development project for movie streaming desktop application with api handl
 # Wanna contribute?
 
 Feel free to connect me for more description for this project and start contributing it.
-Lets build together :)
+Lets build together :) 
 
 ### Learn more on the [Solid Website](https://solidjs.com)
 
