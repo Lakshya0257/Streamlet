@@ -37,7 +37,7 @@ pub mod homepage {
         // }
 
         //declaring headers for authentication
-        //You can also use yout own token by
+        //You can also use yout own token by 
         //https://www.themoviedb.org/settings/api
         let auth_header_value =
             HeaderValue::from_str(&format!("Bearer {}", endpoints::creds::TOKEN))
