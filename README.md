@@ -1,4 +1,4 @@
-## Usage
+## Usage 
 
 Under development project for movie streaming desktop application with api handling in rust and frontend with solidjs.
 
