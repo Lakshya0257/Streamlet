@@ -7,7 +7,7 @@ Under development project for movie streaming desktop application with api handl
 Feel free to connect me for more description for this project and start contributing it.
 Lets build together :) 
 
-### Learn more on the [Solid Website](https://solidjs.com)
+### Learn more on the [Solid Website](https://solidjs.com) 
 
 ## Available Scripts
 
