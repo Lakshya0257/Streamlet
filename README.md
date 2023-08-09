@@ -3,7 +3,7 @@
 Under development project for movie streaming desktop application with api handling in rust and frontend with solidjs.
 
 # Wanna contribute?
-
+ 
 Feel free to connect me for more description for this project and start contributing it.
 Lets build together :) 
 
