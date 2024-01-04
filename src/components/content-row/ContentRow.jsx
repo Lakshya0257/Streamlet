@@ -2,8 +2,10 @@ import "./ContentRow.scss";
 import { For, createSignal, onMount, Show } from "solid-js";
 import { Motion, Presence } from "@motionone/solid";
 import MovieDetail from "../movie-detail/MovieDetail";
+import { useLocation } from "@solidjs/router";
 
 function ContentRow(prop) {
+  const location = useLocation();
   const [clicked, setClicked] = createSignal(false);
   const [left, setLeft] = createSignal(0);
   const [top, setTop] = createSignal(0);
@@ -122,14 +124,14 @@ function ContentRow(prop) {
                   src={movie["backdrop_path"]===null? "https://t4.ftcdn.net/jpg/02/86/32/31/360_F_286323187_mDk3N4nGDaPkUmhNcdBe3RjSOfKqx4nZ.jpg":
                     "https://image.tmdb.org/t/p/w500" +
                     movie["backdrop_path"]
-                  }
+                  } 
                   alt=""
                   draggable="false"
                   class="thumbnails"
                 />
-                <h1>{movie["title"]}</h1>
+                <Show when={location.pathname==='/series'} fallback={<h1>{movie["title"]}</h1>}><h1>{movie["name"]}</h1></Show>
                 <div className="des">
-                  <p>{movie["release_date"]}</p>
+                <Show when={location.pathname==='/series'} fallback={<p>{movie["release_date"]}</p>}><p>{movie["first_air_date"]}</p></Show>
                   <div>
                     <p>❤️ {movie["popularity"]}</p>
                     <p>⭐ {movie["vote_average"]}</p>

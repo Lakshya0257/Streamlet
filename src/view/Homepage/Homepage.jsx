@@ -3,6 +3,7 @@ import ContentRow from "../../components/content-row/ContentRow";
 import { Motion, Presence } from "@motionone/solid";
 import Heading from "../../components/Heading/Heading";
 import MovieDetail from "../../components/movie-detail/MovieDetail";
+import { useLocation } from "@solidjs/router";
 import {
   createSignal,
   createResource,
@@ -14,6 +15,7 @@ import { invoke } from "@tauri-apps/api";
 import Loading from "../../components/loader/Loading";
 
 function Homepage() {
+  const location = useLocation();
   const [topMovieDetail, setMovieDetail] = createSignal(false);
   const [curPage, setCurrPage] = createSignal(1);
   const [clicked, setClicked] = createSignal(false);
@@ -31,20 +33,42 @@ function Homepage() {
 
   //Fetching data from rust for homepage
   const fetchData = async () => {
-    const response = await invoke("get_data", { apiType: "homepage" });
+    console.log(location.pathname);
+    if (location.pathname === "/") {
+      const response = await invoke("get_data", { apiType: "homepage" });
+      console.log(response);
+      return response;
+    } else {
+      const response = await invoke("get_data", { apiType: "series/homepage" });
+      console.log(response);
+      return response;
+    }
+  };
+  const topRated = async () => {
+    if(location.pathname==="/"){
+      const response = await invoke("get_data", { apiType: "top_rated" });
+      //   console.log(response);
+      const res = await movie_detail(
+        response["data"]["results"][0]["id"].toString()
+      );
+      return res;
+    }else {
+      const response = await invoke("get_data", { apiType: "series/top_rated" });
+    //   console.log(response);
+      const res = await series_detail(
+        response["data"]["results"][0]["id"].toString()
+      );
+      return res;
+    }
+    
+  };
+  const movie_detail = async (id) => {
+    const response = await invoke("get_data", { apiType: "get_movie", id: id });
     console.log(response);
     return response;
   };
-  const topRated = async () => {
-    const response = await invoke("get_data", { apiType: "top_rated" });
-    //   console.log(response);
-    const res = await song_detail(
-      response["data"]["results"][0]["id"].toString()
-    );
-    return res;
-  };
-  const song_detail = async (id) => {
-    const response = await invoke("get_data", { apiType: "get_movie", id: id });
+  const series_detail = async (id) => {
+    const response = await invoke("get_data", { apiType: "get_series", id: id });
     console.log(response);
     return response;
   };
@@ -52,7 +76,7 @@ function Homepage() {
   //useful for getting api data
   const [data] = createResource(fetchData);
   const [top_rated] = createResource(topRated);
-  //   const [song_detail] = createResource(topRated);
+  //   const [movie_detail] = createResource(topRated);
 
   createEffect(() => {
     if (
@@ -95,14 +119,19 @@ function Homepage() {
     });
   }
 
-  let [recommended,{ mutate, refetch }] = createResource(()=>recommendedMovies(curPage()));
+  let [recommended,{ mutate, refetch }] = createResource(()=>popular(curPage()));
   
 
  
 //   const [dataKey, setDataKey] = createSignal(curPage());
 
-function recommendedMovies(page) {
-  return invoke("get_data", { apiType: "popular", page: page.toString() });
+function popular(page) {
+  if (location.pathname==="/"){
+    return invoke("get_data", { apiType: "popular", page: page.toString() });
+  }else {
+    return invoke("get_data", { apiType: "series/popular", page: page.toString() });
+  }
+  
 }
 
   function changePage(page) {
@@ -182,7 +211,8 @@ function recommendedMovies(page) {
               <div className="top-info">
                 <p>Popularity : {data()["data"]["results"][0]["popularity"]}</p>
                 <p>⭐ {data()["data"]["results"][0]["vote_average"]}</p>
-                <h1>{data()["data"]["results"][0]["original_title"]}</h1>
+                <Show when={location.pathname==='/series'} fallback={<h1>{data()["data"]["results"][0]["original_title"]}</h1>}><h1>{data()["data"]["results"][0]["name"]}</h1></Show>
+                
                 <p class="des">{data()["data"]["results"][0]["overview"]}</p>
                 <div className="btn">
                   <button class="details" onClick={movieDetailClick}>
@@ -217,7 +247,8 @@ function recommendedMovies(page) {
                   <div className="content-div">
                     <div className="top-bar">
                       <div className="bar-content">
-                        <h2>{top_rated()["data"]["title"]}</h2>
+                        <Show when={location.pathname==="/series"} fallback={<h2>{top_rated()["data"]["original_title"]}</h2>}><h2>{top_rated()["data"]["original_name"]}</h2></Show>
+                        
                         <p>"{top_rated()["data"]["tagline"]}"</p>
                       </div>
                       <div className="genre">
@@ -267,7 +298,8 @@ function recommendedMovies(page) {
                     alt=""
                   />
                   <div className="content-div">
-                    <h2>{movie["title"]}</h2>
+                    <Show when={location.pathname==='/series'} fallback={<h2>{movie["title"]}</h2>}><h2>{movie["name"]}</h2></Show>
+                    
                     <p>⭐ {movie["vote_average"]}</p>
                   </div>
                 </Motion.div>
@@ -294,32 +326,23 @@ function recommendedMovies(page) {
       <Presence exitBeforeEnter>
       <Show when={clicked() === true}>
           <Motion.div
-            initial={{
-              "z-index": "10",
-              position: "fixed",
-              width: `250px`,
-              height: "200px",
-              "border-radius": "2px",
-              left: `100vw`,
-              top: `5vh`,
-            }}
-            exit={{
-              "z-index": "10",
-              position: "fixed",
-              width: `250px`,
-              height: "200px",
-              "border-radius": "2px",
-              left: `100vw`,
-              top: `5vh`,
-            }}
-            animate={{
-              "z-index": "10",
+          style={{
+            "z-index": "10",
               position: "fixed",
               width: `100%`,
               height: "100%",
               "border-radius": "20px",
               left: `15vw`,
               top: `5vh`,
+          }}
+            initial={{
+              opacity: "0",
+            }}
+            exit={{
+              opacity: "0",
+            }}
+            animate={{
+              opacity: "1",
             }}
             transition={{
               duration: 0.5,

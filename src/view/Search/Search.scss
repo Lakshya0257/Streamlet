@@ -73,6 +73,7 @@ $boxShadowColor: rgba(255, 0, 0, 0.69);
       // background-color: rgba(0, 0, 0, 0.561);
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr;
         gap: 30px;
         position: absolute;
   left: 15vw;
@@ -93,8 +94,8 @@ $boxShadowColor: rgba(255, 0, 0, 0.69);
         
             img {
               width: 100%;
-              height: fit-content;
-              max-height: 80%;
+              height: 80%;
+              // max-height: 80%;
               object-fit: cover;
               border-radius: $borderRadius;
               // margin-right: 5%;

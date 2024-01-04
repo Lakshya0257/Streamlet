@@ -16,10 +16,10 @@ fn main() {
 #[tauri::command]
 // #[warn(non_snake_case)]
 //https://tauri.app/v1/guides/features/command/
-async fn get_data(apiType: String, id: Option<String>,page: Option<String>) -> Result<Value, ()> {
+async fn get_data(api_type: String, id: Option<String>,page: Option<String>,season: Option<String>) -> Result<Value, ()> {
     //client for api callings
     let client: Client = reqwest::Client::new();
-    match apiType.as_str() {
+    match api_type.as_str() {
         "homepage" => {
             println!("Getting Homepage...");
             let value: Value = repository::homepage::homepage::trending_movies(client).await;
@@ -39,8 +39,6 @@ async fn get_data(apiType: String, id: Option<String>,page: Option<String>) -> R
                     Result::Ok(value)
                 }
             }
-            
-            
         }
         "get_movie" => {
             println!("Getting Movie Details...");
@@ -101,7 +99,74 @@ async fn get_data(apiType: String, id: Option<String>,page: Option<String>) -> R
                     Result::Ok(value)
                 }
             }
- }
+        }
+
+
+
+
+
+
+
+
+        // Series apis
+        "series/homepage" => {
+            println!("Getting Series Homepage...");
+            let value: Value = repository::series::homepage::homepage::trending_series(client).await;
+            // println!("Tranferring the data to the application...");
+            Result::Ok(value)
+        }
+        "series/top_rated" => {
+            println!("Getting Top Rated series...");
+            match page{
+                Some(page) =>{
+                    let value: Value = repository::series::series_list::series_list::top_rated(client,page).await;
+                    Result::Ok(value)
+                }
+                None=>{
+                    let value: Value = repository::series::series_list::series_list::top_rated(client,String::from("1")).await;
+                    Result::Ok(value)
+                }
+            }
+        }
+        "get_series" => {
+            println!("Getting Series Details...");
+            let value: Value =
+                repository::series::series_info::series::series_detail(client, &id.unwrap_or(String::from("")))
+                    .await;
+            Result::Ok(value)
+        }
+        "series/popular" => {
+            println!("Getting popular series...");
+            
+            match page{
+                Some(page) =>{
+                    let value: Value =
+            repository::series::series_list::series_list::popular(client,page)
+                    .await;
+            Result::Ok(value)
+                }
+                None=>{
+                    let value: Value = repository::series::series_list::series_list::popular(client,String::from("1")).await;
+                    Result::Ok(value)
+                }
+            }
+        }
+        "series/season" => {
+            println!("Getting season info...");
+            
+            match season{
+                Some(sea) =>{
+                    let value: Value =
+            repository::series::series_info::series::series_season_detail(client,&id.unwrap_or(String::from("")),&sea)
+                    .await;
+            Result::Ok(value)
+                }
+                None=>{
+                    let value: Value = repository::series::series_info::series::series_season_detail(client,&id.unwrap_or(String::from("")),"1").await;
+                    Result::Ok(value)
+                }
+            }
+        }
 
         //Getting invalid request from front-end side
         _ => Result::Ok(json!({
@@ -110,6 +175,7 @@ async fn get_data(apiType: String, id: Option<String>,page: Option<String>) -> R
         })),
     }
 }
+
 
 // ------------------------------Module imports--------------------------------
 
@@ -131,6 +197,12 @@ mod api {
 
         pub mod streaming {
             pub mod streaming;
+        }
+
+        pub mod series {
+            pub mod homepage;
+            pub mod series_list;
+            pub mod series_info;
         }
     }
 

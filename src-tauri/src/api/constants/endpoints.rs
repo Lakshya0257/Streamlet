@@ -6,6 +6,12 @@ pub mod endpoints {
     pub const POPULAR: &str = "https://api.themoviedb.org/3/movie/popular";
     pub const BASEURL: &str = "https://api.themoviedb.org/3/movie/";
     pub const SEARCHMOVIE: &str = "https://api.themoviedb.org/3/search/movie";
+
+    //Series endpoints
+    pub const SERIESHOMEPAGE: &str = "https://api.themoviedb.org/3/trending/tv/week";
+    pub const SERIESTOPRATED: &str = "https://api.themoviedb.org/3/tv/top_rated";
+    pub const SERIESBASEURL: &str = "https://api.themoviedb.org/3/tv/";
+    pub const SERIESPOPULAR: &str = "https://api.themoviedb.org/3/tv/popular";
 }
 
 pub mod creds {

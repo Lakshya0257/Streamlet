@@ -15,8 +15,11 @@ function App() {
     <div className="middle-main">
     <Routes>
       <Route path="/" component={Homepage}></Route>
+      <Route path="/series" component={Homepage}></Route>
       <Route path="/search" component={Search}></Route>
+      <Route path="/search/series" component={Search}></Route>
       <Route path="/top-rated" component={TopRated}></Route>
+      <Route path="/top-rated/series" component={TopRated}></Route>
     </Routes>
     </div>
     </>

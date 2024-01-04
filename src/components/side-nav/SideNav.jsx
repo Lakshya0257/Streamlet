@@ -1,11 +1,26 @@
+import { createSignal } from 'solid-js';
 import './SideNav.scss'
 import { useNavigate, useMatch } from "@solidjs/router";
 function SideNav(){
-    const home = useMatch(() => "/");
-    const topRated = useMatch(() => "/top-rated");
+    const [curview, setCurrentView] = createSignal("movie");
+    const home =  useMatch(() =>"/" );
+    const shome = useMatch(() =>"/series" )
+    const topRated =  useMatch(() => "/top-rated");
+    const stopRated = useMatch(() => "/top-rated/series");
     const navigate = useNavigate();
-    function handleButtonClick(route) {
+
     
+
+    function changeView(view){
+        setCurrentView(view);
+        if(view==="movie"){
+            handleButtonClick("/");
+        }else{
+            handleButtonClick("/series");
+        }
+    }
+
+    function handleButtonClick(route) {    
         // Navigate to the specified route
         navigate(route);
       }
@@ -13,8 +28,8 @@ function SideNav(){
     return (
         <div class="side-nav">
             <div className="selectors">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEreNft0MzlaGV_KXt7HmORix4Y3Us0fFNQoU-ROWqJ_iihvM_VVuQ_H5ZnRlAj6ng2Bk&usqp=CAU" alt="" />
-                <img src="https://m.media-amazon.com/images/I/91K1ZEk9oiL._RI_.jpg" alt="" />
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEreNft0MzlaGV_KXt7HmORix4Y3Us0fFNQoU-ROWqJ_iihvM_VVuQ_H5ZnRlAj6ng2Bk&usqp=CAU" alt="" onClick={()=>changeView("movie")} />
+                <img src="https://m.media-amazon.com/images/I/91K1ZEk9oiL._RI_.jpg" alt="" onClick={()=>changeView("series")} />
                 <img src="https://i.pinimg.com/originals/2b/e6/80/2be680292cdea62cd8495a9d5a5866c0.jpg" alt="" />
                 {/* <h1>.</h1>
                 <i class="fa-regular fa-circle-xmark fa-rotate-90" style="color: #ffffff;"></i>
@@ -22,11 +37,11 @@ function SideNav(){
             </div>
             <div className="tabs">
                 <h1>Tabs</h1>
-                <button  classList={{ active: Boolean(home()) }} onClick={() => handleButtonClick("/")} >
+                <button  classList={{ active: curview()==="movie"? Boolean(home()): Boolean(shome()) }} onClick={() => curview()==="movie"? handleButtonClick("/"): handleButtonClick("/series")} >
                 <i class="fa-solid fa-house"></i>
                 <p>Home</p>
                 </button>
-                <button classList={{ active: Boolean(topRated()) }} onClick={() => handleButtonClick("/top-rated")}>
+                <button classList={{ active: curview()==="movie"? Boolean(topRated()) : Boolean(stopRated()) }} onClick={() => curview()==="movie"? handleButtonClick("/top-rated"): handleButtonClick("/top-rated/series")}>
                 <i class="fa-regular fa-star"></i>
                 <p>Top Rated</p>
                 </button>

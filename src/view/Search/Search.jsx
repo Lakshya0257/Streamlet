@@ -122,10 +122,10 @@ function Search() {
                   <img  id={movie['id']}
                   onclick={movieDetails}
                     src={
-                      movie["poster_path"] === null
+                      movie["backdrop_path"] === null
                         ? "https://t4.ftcdn.net/jpg/02/86/32/31/360_F_286323187_mDk3N4nGDaPkUmhNcdBe3RjSOfKqx4nZ.jpg"
                         : "https://image.tmdb.org/t/p/w500" +
-                          movie["poster_path"]
+                          movie["backdrop_path"]
                     } 
                     alt=""
                   />

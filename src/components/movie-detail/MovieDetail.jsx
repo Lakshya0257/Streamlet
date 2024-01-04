@@ -7,12 +7,16 @@ import {
   createResource,
   createEffect,
 } from "solid-js";
-import { invoke } from "@tauri-apps/api";
+import { invoke, path } from "@tauri-apps/api";
 import Loading from "../loader/Loading";
+import SeriesSelector from "./SeriesSelector";
+import { useLocation } from "@solidjs/router";
 function MovieDetail(props) {
+  const location = useLocation();
   console.log(props.id);
   const [showcontent, setShowContent] = createSignal(false);
   const [showGallery, setShowGallery] = createSignal(false);
+  const [showSeasonsContent, setShowSeasons] = createSignal(false);
   const [streamingUrl, setStreamingUrl] = createSignal("");
   const [showServers, setShowServers] = createSignal(false);
   const [tab, selectTab] = createSignal("cast");
@@ -56,7 +60,20 @@ function MovieDetail(props) {
     setShowServers(true);
   }
 
+  function showSeasons() {
+    setShowSeasons(true);
+    console.log(showSeasonsContent());
+  }
+
   const movie_detail = async () => {
+    if(location.pathname==="/series"){
+      const response = await invoke("get_data", {
+        apiType: "get_series",
+        id: props.id,
+      });
+      console.log(response);
+      return response;
+    }
     const response = await invoke("get_data", {
       apiType: "get_movie",
       id: props.id,
@@ -127,6 +144,9 @@ function MovieDetail(props) {
           <Loading></Loading>
         </Show>
       </Presence>
+      <Show when={showSeasonsContent()}>
+          <SeriesSelector content={movieDetail()["data"]["seasons"]} id={props.id}></SeriesSelector>
+      </Show>
       <Presence>
         <Show when={showcontent()}>
           <Motion.div
@@ -189,7 +209,7 @@ function MovieDetail(props) {
                   <div className="movie-detail-des">
                     <h1>
                       {movieDetail()["data"]["tagline"] === ""
-                        ? movieDetail()["data"]["title"]
+                        ? location.pathname==='/series' ? movieDetail()["data"]["name"] : movieDetail()["data"]["title"]
                         : movieDetail()["data"]["tagline"]}
                     </h1>
                     <hr />
@@ -204,8 +224,8 @@ function MovieDetail(props) {
                     <hr />
                     <p>{movieDetail()["data"]["overview"]}</p>
                     <hr />
-                    <p>Revenue: 💲{movieDetail()["data"]["revenue"]}</p>
-                    <Show when={movieUrls.state === "ready"}>
+                    <Show when={location.pathname==="/"} fallback={<p>Popularity: {movieDetail()["data"]["popularity"]}</p>}><p>Revenue: 💲{movieDetail()["data"]["revenue"]}</p></Show>
+                    <Show when={movieUrls.state === "ready" && location.pathname==="/"}>
                       <hr />
                       <Motion.div
                         initial={{
@@ -248,6 +268,26 @@ function MovieDetail(props) {
                             }}
                           </For>
                         </Show>
+                      </Motion.div>
+                    </Show>
+                    <Show when={movieUrls.state === "ready" && location.pathname==="/series"}>
+                      <hr />
+                      <Motion.div
+                        initial={{
+                          scale: 0,
+                        }}
+                        animate={{
+                          scale: 1,
+                        }}
+                        transition={{
+                          duration: 0.4,
+                          easing: "ease-in-out",
+                        }}
+                        className="stream"
+                      >
+                        <button class="details" onClick={showSeasons}>
+                          Select Season
+                        </button>
                       </Motion.div>
                     </Show>
                   </div>
