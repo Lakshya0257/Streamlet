@@ -1,15 +1,23 @@
 import './TopBar.scss';
-import { useNavigate } from "@solidjs/router";
+import { useLocation, useNavigate } from "@solidjs/router";
 import { on, onMount } from 'solid-js';
 import { appWindow } from '@tauri-apps/api/window'
 function TopBar(){
     const navigate = useNavigate();
+    const location = useLocation();
 
     function searchClick(){
-      
+      if(location.pathname.includes("/series")){
         navigate('/series/search');
         const customEvent = new CustomEvent("search");
       document.dispatchEvent(customEvent);
+      }
+      else {
+        navigate('/search');
+        const customEvent = new CustomEvent("search");
+      document.dispatchEvent(customEvent);
+      }
+        
         
         
     }

@@ -109,7 +109,7 @@ function Search() {
       <Loading></Loading>
     </Show>
     </Presence>
-    <Show when={Object.keys(searchResult()).length !== 0}>
+    <Show when={Object.keys(searchResult()).length !== 0 && searchResult()["data"]["results"].length !==0}>
       <img class="search-bg-image" src={"https://image.tmdb.org/t/p/original"+searchResult()["data"]["results"][0]["backdrop_path"]} alt="" />
       <div class="search-nav">
         <h1>Search Results</h1>
@@ -140,7 +140,7 @@ function Search() {
                     alt=""
                   />
                   <div className="content-div">
-                    <h2>{movie["name"]}</h2>
+                    <h2>{location.pathname.includes("/series")? movie["name"]: movie["title"]}</h2>
                     <p>⭐ {movie["vote_average"]}</p>
                   </div>
                 </Motion.div>
