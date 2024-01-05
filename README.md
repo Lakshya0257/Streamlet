@@ -1,6 +1,6 @@
 ## Usage 
  
-Under development project for movie streaming desktop application with api handling in rust and frontend with solidjs.
+Project for movie streaming desktop application with api handling in rust and frontend with solidjs.
 
 # Wanna contribute?
   
@@ -9,13 +9,11 @@ Lets build together :)
 
 ### Learn more on the [Solid Website](https://solidjs.com) 
 
-![image](https://github.com/Lakshya0257/Streamlet/assets/114349137/e625fb89-77aa-48c9-b29c-c336b1ad933a)
 
-![image](https://github.com/Lakshya0257/Streamlet/assets/114349137/21c3254c-a3fe-4b35-ade2-eba719ca3e0e)
-
-![image](https://github.com/Lakshya0257/Streamlet/assets/114349137/cd259bd1-af10-4708-94c4-276704ae4d6d)
-
-![image](https://github.com/Lakshya0257/Streamlet/assets/114349137/cc6f6d74-6c8d-4d4d-a11e-0719ab58bd2a)
+![Screenshot 2024-01-05 164928](https://github.com/Lakshya0257/Streamlet/assets/114349137/08614b00-4b09-4d8c-92dd-2f79db05a5fc)
+![Screenshot 2024-01-05 165005](https://github.com/Lakshya0257/Streamlet/assets/114349137/fe046f24-be5f-4862-896f-8fad0f19825c)
+![Screenshot 2024-01-05 165015](https://github.com/Lakshya0257/Streamlet/assets/114349137/fed87af9-1426-4a61-8756-46a3310c772e)
+![Screenshot 2024-01-05 165447](https://github.com/Lakshya0257/Streamlet/assets/114349137/837a0a55-361a-4b51-ab11-b10691951435)
 
 
 
