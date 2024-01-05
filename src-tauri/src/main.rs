@@ -16,7 +16,7 @@ fn main() {
 #[tauri::command]
 // #[warn(non_snake_case)]
 //https://tauri.app/v1/guides/features/command/
-async fn get_data(api_type: String, id: Option<String>,page: Option<String>,season: Option<String>) -> Result<Value, ()> {
+async fn get_data(api_type: String, id: Option<String>,page: Option<String>,season: Option<String>, episode: Option<String>) -> Result<Value, ()> {
     //client for api callings
     let client: Client = reqwest::Client::new();
     match api_type.as_str() {
@@ -166,6 +166,31 @@ async fn get_data(api_type: String, id: Option<String>,page: Option<String>,seas
                     Result::Ok(value)
                 }
             }
+        }
+        "series_cast" => {
+            println!("Getting Movie casts...");
+            let value: Value =
+                repository::series::series_info::series::series_cast(client, &id.unwrap_or(String::from("")))
+                    .await;
+            Result::Ok(value)
+        }
+        "series_streaming_url" => {
+            println!("Getting Series url...");
+            let value: Value = repository::streaming::streaming::streaming::series_streaming_url(
+                client,
+                &id.unwrap_or(String::from("")),
+                &season.unwrap_or(String::from("1")),
+                &episode.unwrap_or(String::from("1"))
+            )
+            .await;
+            Result::Ok(value)
+        }
+        "series_trailer" => {
+            println!("Getting Movie trailer...");
+            let value: Value =
+                repository::series::series_info::series::series_trailer(client, &id.unwrap_or(String::from("")))
+                    .await;
+            Result::Ok(value)
         }
 
         //Getting invalid request from front-end side

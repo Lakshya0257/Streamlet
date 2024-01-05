@@ -19,6 +19,8 @@ function MovieDetail(props) {
   const [showSeasonsContent, setShowSeasons] = createSignal(false);
   const [streamingUrl, setStreamingUrl] = createSignal("");
   const [showServers, setShowServers] = createSignal(false);
+  const [selectedSeason, setSelectedSeason] = createSignal("1");
+  const [selectedEpisode, setSelectedEpisode] = createSignal("1");
   const [tab, selectTab] = createSignal("cast");
 
   function tabSelector(ev) {
@@ -91,6 +93,16 @@ function MovieDetail(props) {
     return response;
   };
   const movie_urls = async () => {
+    if(location.pathname==="/series"){
+      const response = await invoke("get_data", {
+        apiType: "series_streaming_url",
+        id: props.id,
+        season: selectedSeason(),
+        episode: selectedEpisode()
+      });
+      console.log(response);
+      return response;
+    }
     const response = await invoke("get_data", {
       apiType: "streaming_url",
       id: props.id,
@@ -98,7 +110,20 @@ function MovieDetail(props) {
     console.log(response);
     return response;
   };
+
   const movie_trailer = async () => {
+    if(location.pathname==="/series"){
+      const response = await invoke("get_data", {
+        apiType: "series_trailer",
+        id: props.id,
+      });
+      console.log(response);
+      if (response["data"] === "No trailer found") {
+        return;
+      }
+      setStreamingUrl(response["data"]);
+      return response;
+    }
     const response = await invoke("get_data", {
       apiType: "movie_trailer",
       id: props.id,
@@ -111,6 +136,14 @@ function MovieDetail(props) {
     return response;
   };
   const movie_cast = async () => {
+    if(location.pathname==="/series"){
+      const response = await invoke("get_data", {
+        apiType: "series_cast",
+        id: props.id,
+      });
+      console.log(response);
+      return response;
+    }
     const response = await invoke("get_data", {
       apiType: "movie_cast",
       id: props.id,
@@ -131,6 +164,16 @@ function MovieDetail(props) {
     }
   });
 
+  function closeSeasonDialog() {
+    setShowSeasons(false);
+  }
+
+  function playEpisode(season,episode) {
+    console.log(season,episode);
+    setSelectedSeason(season);
+    setSelectedEpisode(episode);
+  }
+
   
 
   return (
@@ -145,7 +188,7 @@ function MovieDetail(props) {
         </Show>
       </Presence>
       <Show when={showSeasonsContent()}>
-          <SeriesSelector content={movieDetail()["data"]["seasons"]} id={props.id}></SeriesSelector>
+          <SeriesSelector closeSeason={closeSeasonDialog} selected={playEpisode} content={movieDetail()["data"]["seasons"]} id={props.id}></SeriesSelector>
       </Show>
       <Presence>
         <Show when={showcontent()}>
@@ -217,7 +260,7 @@ function MovieDetail(props) {
                       <div className="info">
                         <p>{movieDetail()["data"]["release_date"]}</p>
                         <p>{movieDetail()["data"]["genres"][0]["name"]}</p>
-                        <p>{movieDetail()["data"]["runtime"]}m</p>
+                        <p>{movieDetail()["data"]["runtime"]}</p>
                       </div>
                       <p>⭐ {movieDetail()["data"]["vote_average"]}</p>
                     </div>
@@ -225,7 +268,7 @@ function MovieDetail(props) {
                     <p>{movieDetail()["data"]["overview"]}</p>
                     <hr />
                     <Show when={location.pathname==="/"} fallback={<p>Popularity: {movieDetail()["data"]["popularity"]}</p>}><p>Revenue: 💲{movieDetail()["data"]["revenue"]}</p></Show>
-                    <Show when={movieUrls.state === "ready" && location.pathname==="/"}>
+                    <Show when={movieUrls.state === "ready"}>
                       <hr />
                       <Motion.div
                         initial={{
@@ -415,6 +458,26 @@ function MovieDetail(props) {
                           </Show>
                         </Motion.div>
                       </Show>
+                      <Show when={movieUrls.state === "ready" && location.pathname==="/series"}>
+                      <hr />
+                      <Motion.div
+                        initial={{
+                          scale: 0,
+                        }}
+                        animate={{
+                          scale: 1,
+                        }}
+                        transition={{
+                          duration: 0.4,
+                          easing: "ease-in-out",
+                        }}
+                        className="stream"
+                      >
+                        <button class="details" onClick={showSeasons}>
+                          Select Season
+                        </button>
+                      </Motion.div>
+                    </Show>
                       <Show when={movieTrailer.state === "ready"}>
                         <Motion.button
                           initial={{

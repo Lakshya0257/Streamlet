@@ -21,6 +21,7 @@ pub mod series {
         api_response::enum_response::check_response(response).await
     }
     pub async fn series_season_detail(client: reqwest::Client, id: &str, season:&str) -> Value {
+        println!("{}, {}", id, season);
         //declaring headers for authentication
         //You can also use your own token by
         //https://www.themoviedb.org/settings/api
@@ -29,7 +30,7 @@ pub mod series {
                 .expect("Invalid header value");
 
         let response: Result<Response, Error> = client
-            .get(endpoints::endpoints::SERIESBASEURL.to_string() + id + "/season" +season)
+            .get(endpoints::endpoints::SERIESBASEURL.to_string() + id + "/season/" +season)
             .header(AUTHORIZATION, auth_header_value)
             .send()
             .await;
@@ -57,7 +58,7 @@ pub mod series {
                 .expect("Invalid header value");
 
         let response: Result<Response, Error> = client
-            .get(endpoints::endpoints::BASEURL.to_string() + id + "/credits")
+            .get(endpoints::endpoints::SERIESBASEURL.to_string() + id + "/credits")
             .header(AUTHORIZATION, auth_header_value)
             .send()
             .await;
@@ -70,7 +71,7 @@ pub mod series {
                 .expect("Invalid header value");
 
         let response: Result<Response, Error> = client
-            .get(endpoints::endpoints::BASEURL.to_string() + id + "/videos")
+            .get(endpoints::endpoints::SERIESBASEURL.to_string() + id + "/videos")
             .header(AUTHORIZATION, auth_header_value)
             .send()
             .await;
