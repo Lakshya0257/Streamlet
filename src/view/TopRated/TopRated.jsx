@@ -13,14 +13,19 @@ import {
   For,
 } from "solid-js";
 import { invoke } from "@tauri-apps/api";
+import { useLocation } from "@solidjs/router";
 function TopRated(){
     const [clicked, setClicked] = createSignal(false);
   const [target, setTarget] = createSignal();
   const [bgImage, setBackgroundImage] = createSignal("");
+  const location = useLocation();
 //   const [curPage, setCurrPage] = createSignal(1);
 
-  function topRated(page) {
-    return invoke("get_data", { apiType: "top_rated", page: page.toString() });
+  async function topRated(page) {
+    if(location.pathname.includes("/series")){
+      return await invoke("get_data", { apiType: "series/top_rated", page: page.toString() });
+    }
+    return await invoke("get_data", { apiType: "top_rated", page: page.toString() });
   }
 
   function handleChildClick() {
@@ -104,7 +109,7 @@ function TopRated(){
                   opacity:1,
                 }}
                 transition={{
-                  duration:(i()+1)/3,
+                  duration:(i()+1)/10,
                   easing:"ease-in-out"
                 }}
                  className="search-results">
@@ -119,7 +124,7 @@ function TopRated(){
                     alt=""
                   />
                   <div className="content-div">
-                    <h2>{movie["title"]}</h2>
+                    <h2>{location.pathname.includes("/series")? movie["name"] : movie["title"]}</h2>
                     <p>⭐ {movie["vote_average"]}</p>
                   </div>
                 </Motion.div>
@@ -169,8 +174,8 @@ function TopRated(){
               position: "fixed",
               width: `100%`,
               height: "100%",
-              "border-radius": "20px",
-              left: `15vw`,
+              "border-radius": "2px",
+              left: `12vw`,
               top: `5vh`,
             }}
             transition={{
@@ -187,7 +192,7 @@ function TopRated(){
                 position: "absolute",
                 top: "0",
                 left: "0",
-                "border-radius": "20px",
+                "border-radius": "2px",
                 "z-index": 0,
                 "object-fit": "cover",
               }}

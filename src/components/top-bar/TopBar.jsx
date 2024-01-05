@@ -31,9 +31,9 @@ function TopBar(){
 document
   .getElementById('titlebar-minimize')
   .addEventListener('click', () => appWindow.minimize())
-document
-  .getElementById('titlebar-maximize')
-  .addEventListener('click', () => appWindow.toggleMaximize())
+// document
+//   .getElementById('titlebar-maximize')
+//   .addEventListener('click', () => appWindow.toggleMaximize())
 document
   .getElementById('titlebar-close')
   .addEventListener('click', () => appWindow.close())
@@ -41,6 +41,7 @@ document
 
     return (
         <div data-tauri-drag-region class="titlebar">
+          <h1>CinéWave</h1>
       <div class="btns">
         <div class="search-bar">
           <input class="search-input" id='search' type="text" placeholder='Search movie or series here' autocomplete="off"/>

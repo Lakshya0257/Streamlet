@@ -1,7 +1,7 @@
 .backIcon{
     position: fixed;
     top: 8vh;
-    left: 17vw;
+    left: 15vw;
     font-size: 2rem;
     z-index: 2;
 }
@@ -291,7 +291,7 @@
                 // background-color: aqua;
 
                 img{
-                    border-radius: 20px;
+                    border-radius: 2px;
                     width: 100%;
                     height: 100%;
                     // height: fit-content;
@@ -301,7 +301,7 @@
                 iframe{
                     width: 100%;
                     height: 100%;
-                    border-radius: 20px;
+                    border-radius: 2px;
                 }
             }
 

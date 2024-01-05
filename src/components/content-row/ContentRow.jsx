@@ -169,8 +169,8 @@ function ContentRow(prop) {
               position: "fixed",
               width: `100%`,
               height: "100%",
-              "border-radius": "20px",
-              left: `15vw`,
+              "border-radius": "2px",
+              left: `12vw`,
               top: `5vh`,
             }}
             transition={{
@@ -187,7 +187,7 @@ function ContentRow(prop) {
                 position: "absolute",
                 top: "0",
                 left: "0",
-                "border-radius": "20px",
+                "border-radius": "2px",
                 "z-index": 0,
                 "object-fit": "cover",
                 "object-position": `${objPos()}`,

@@ -7,7 +7,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "cinesuggest",
+    "productName": "CineWave",
     "version": "0.1.0"
   },
   "tauri": {
@@ -41,7 +41,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "xyz.tauri.dev",
+      "identifier": "cinwave.dev",
       "longDescription": "",
       "macOS": {
         "entitlements": null,

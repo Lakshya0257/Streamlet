@@ -24,10 +24,18 @@ pub mod streaming {
 
         for url in base_urls {
             let url = url.replace("REPLACE", id);
-            let res = client.get(&url).send().await.unwrap();
-            if res.status() == 200 {
-                urls.push(url);
+            let res = client.get(&url).send().await;
+            match res {
+                Result::Ok(val)=>{
+                    if val.status() == 200 {
+                        urls.push(url);
+                    }
+                }
+                _=>{
+                    println!("Error getting url: {:?}", res);
+                }
             }
+            
         }
 
         match urls.len() {

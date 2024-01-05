@@ -14,6 +14,30 @@ body {
   display: none;
 }
 
+.footer{
+  /* position: fixed; */
+  /* left: 15px;
+  max-width: 9vw;
+  bottom: 0; */
+  /* width: 100%; */
+  /* background-color: grey; */
+  margin: 40px 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.footer p{
+  font-size: 1rem;
+  text-align: center;
+  color: rgb(143, 143, 143);
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+
+
 *{
   margin: 0;
   padding: 0;

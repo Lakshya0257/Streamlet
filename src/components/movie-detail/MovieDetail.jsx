@@ -213,7 +213,7 @@ function MovieDetail(props) {
             }}
             animate={{
               width: "100%",
-              "border-top-left-radius": "20px",
+              "border-top-left-radius": "2px",
             }}
             exit={{
               opacity: "0",
@@ -520,7 +520,7 @@ function MovieDetail(props) {
                     className="bottom-title"
                   >
                     <h1 class="bottom-title">
-                      {movieDetail()["data"]["title"]}
+                      {location.pathname.includes("/series")?movieDetail()["data"]["name"] : movieDetail()["data"]["title"]}
                     </h1>
                   </Motion.div>
                 </div>

@@ -285,7 +285,7 @@ function popular(page) {
                   opacity:1,
                 }}
                 transition={{
-                  duration:(i()+1)/6,
+                  duration:(i()+1)/10,
                   easing:"ease-in-out"
                 }}
                  className="search-results">
@@ -323,6 +323,11 @@ function popular(page) {
         <button onClick={()=>changePage(curPage()===parseInt(recommended()["data"]['total_pages'])?parseInt(recommended()["data"]['total_pages']) :curPage()===500? 500 :curPage()+1)}>&gt;</button>
         
       </div>
+      <div className="footer">
+        <p>© 2024 Lakshya Bhati. All rights reserved.</p>
+        <p>This application does not rip or host any files on it's servers. All files or contents hosted on third party websites. We doesn't accept the responsibility for contents hosted on third party websites. Also application
+doesn't RIP/Pirate any file. We just collect links from other websites. Nothing Else.</p>
+      </div>
         
       </div>
       <Presence exitBeforeEnter>
@@ -333,8 +338,8 @@ function popular(page) {
               position: "fixed",
               width: `100%`,
               height: "100%",
-              "border-radius": "20px",
-              left: `15vw`,
+              "border-radius": "2px",
+              left: `9vw`,
               top: `5vh`,
           }}
             initial={{
@@ -360,7 +365,7 @@ function popular(page) {
                 position: "absolute",
                 top: "0",
                 left: "0",
-                "border-radius": "20px",
+                "border-radius": "2px",
                 "z-index": 0,
                 "object-fit": "cover",
               }}
@@ -400,7 +405,7 @@ function popular(page) {
                 left: 0,
                 width: `100%`,
                 height: "100%",
-                "border-radius": "20px",
+                "border-radius": "2px",
               }}
               transition={{
                 duration: 0.5,

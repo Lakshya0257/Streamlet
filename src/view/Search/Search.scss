@@ -1,6 +1,6 @@
 $leftMargin: 15vw;
 $topMargin: 5vh;
-$borderRadius: 20px;
+$borderRadius: 2px;
 $primaryColor: red;
 $darkColor: rgb(40, 40, 40);
 $fontColorGray: grey;
@@ -58,8 +58,8 @@ $boxShadowColor: rgba(255, 0, 0, 0.69);
 
     h1{
         margin-top: 2vh;
-
-        font-size: 2rem;
+        font-size: 1.5rem;
+        font-weight: 500;
     }
 
     .back-image {
@@ -72,12 +72,12 @@ $boxShadowColor: rgba(255, 0, 0, 0.69);
     .content {
       // background-color: rgba(0, 0, 0, 0.561);
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
         // grid-template-rows: 1fr;
-        gap: 10px;
+        gap: 15px;
         position: absolute;
-  left: 5vw;
-  right: 5vw;
+  left: 4vw;
+  right: 4vw;
   bottom: 6vh;
   // height: fit-content;
         top: calc(2rem + 5vh);
@@ -89,6 +89,8 @@ $boxShadowColor: rgba(255, 0, 0, 0.69);
           
           min-width: 100%;
           max-width: 100%;
+          // width: fit-content;
+          max-height: 350px;
             // margin: 2vh 4vw;
             // height: $topRatedHeight;
             @include centerFlex;

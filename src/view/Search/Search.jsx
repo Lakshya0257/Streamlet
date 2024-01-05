@@ -125,7 +125,7 @@ function Search() {
                   opacity:1,
                 }}
                 transition={{
-                  duration:(i()+1)/3,
+                  duration:(i()+1)/10,
                   easing:"ease-in-out"
                 }}
                  className="search-results">
@@ -175,8 +175,8 @@ function Search() {
               position: "fixed",
               width: `100%`,
               height: "100%",
-              "border-radius": "20px",
-              left: `15vw`,
+              "border-radius": "2px",
+              left: `12vw`,
               top: `5vh`,
             }}
             transition={{
@@ -193,7 +193,7 @@ function Search() {
                 position: "absolute",
                 top: "0",
                 left: "0",
-                "border-radius": "20px",
+                "border-radius": "2px",
                 "z-index": 0,
                 "object-fit": "cover",
               }}
