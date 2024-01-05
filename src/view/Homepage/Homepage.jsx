@@ -325,7 +325,7 @@ function popular(page) {
       </div>
       <div className="footer">
         <p>© 2024 Lakshya Bhati. All rights reserved.</p>
-        <p>This application does not rip or host any files on it's servers. All files or contents hosted on third party websites. We doesn't accept the responsibility for contents hosted on third party websites. Also application
+        <p>This application does not rip or host any files on it's servers. All files or contents hosted on third party websites. We don't accept the responsibility for contents hosted on third party websites. Also application
 doesn't RIP/Pirate any file. We just collect links from other websites. Nothing Else.</p>
       </div>
         
@@ -339,7 +339,7 @@ doesn't RIP/Pirate any file. We just collect links from other websites. Nothing 
               width: `100%`,
               height: "100%",
               "border-radius": "2px",
-              left: `9vw`,
+              left: `12vw`,
               top: `5vh`,
           }}
             initial={{

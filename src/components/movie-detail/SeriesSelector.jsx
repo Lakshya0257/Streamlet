@@ -54,7 +54,7 @@ function SeriesSelector(props) {
             top: "10%",
             bottom: "10%",
             right: "5vw",
-            "border-radius":"20px",
+            "border-radius":"2px",
             "background-color":"rgba(0, 0, 0, 0.974)",
             "z-index":"15"
         }}
