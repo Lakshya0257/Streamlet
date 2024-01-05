@@ -22,6 +22,7 @@ function MovieDetail(props) {
   const [selectedSeason, setSelectedSeason] = createSignal("1");
   const [selectedEpisode, setSelectedEpisode] = createSignal("1");
   const [tab, selectTab] = createSignal("cast");
+  const [loader, setLoader] = createSignal(false);
 
   function tabSelector(ev) {
     const cast = document.getElementById("cast");
@@ -68,7 +69,7 @@ function MovieDetail(props) {
   }
 
   const movie_detail = async () => {
-    if(location.pathname==="/series"){
+    if(location.pathname.includes("/series")){
       const response = await invoke("get_data", {
         apiType: "get_series",
         id: props.id,
@@ -93,7 +94,7 @@ function MovieDetail(props) {
     return response;
   };
   const movie_urls = async () => {
-    if(location.pathname==="/series"){
+    if(location.pathname.includes("/series")){
       const response = await invoke("get_data", {
         apiType: "series_streaming_url",
         id: props.id,
@@ -112,7 +113,7 @@ function MovieDetail(props) {
   };
 
   const movie_trailer = async () => {
-    if(location.pathname==="/series"){
+    if(location.pathname.includes("/series")){
       const response = await invoke("get_data", {
         apiType: "series_trailer",
         id: props.id,
@@ -136,7 +137,7 @@ function MovieDetail(props) {
     return response;
   };
   const movie_cast = async () => {
-    if(location.pathname==="/series"){
+    if(location.pathname.includes("/series")){
       const response = await invoke("get_data", {
         apiType: "series_cast",
         id: props.id,
@@ -154,7 +155,7 @@ function MovieDetail(props) {
 
   const [movieDetail] = createResource(movie_detail);
   const [gallaryData] = createResource(movie_images);
-  const [movieUrls] = createResource(movie_urls);
+  const [movieUrls, {mutate}] = createResource(movie_urls);
   const [movieTrailer] = createResource(movie_trailer);
   const [movieCast] = createResource(movie_cast);
 
@@ -168,10 +169,16 @@ function MovieDetail(props) {
     setShowSeasons(false);
   }
 
-  function playEpisode(season,episode) {
+  async function playEpisode(season,episode) {
     console.log(season,episode);
-    setSelectedSeason(season);
-    setSelectedEpisode(episode);
+    setSelectedSeason(`${season}`);
+    setSelectedEpisode(`${episode}`);
+    setLoader(true);
+    const data = await movie_urls();
+    mutate(data);
+    console.log(movieUrls());
+    closeSeasonDialog();
+    setLoader(false);
   }
 
   
@@ -181,7 +188,7 @@ function MovieDetail(props) {
       <Presence>
         <Show
           when={
-            movieDetail.state === "pending" || movieUrls.state === "pending"
+            movieDetail.state === "pending" || movieUrls.state === "pending" || loader()
           }
         >
           <Loading></Loading>
@@ -252,7 +259,7 @@ function MovieDetail(props) {
                   <div className="movie-detail-des">
                     <h1>
                       {movieDetail()["data"]["tagline"] === ""
-                        ? location.pathname==='/series' ? movieDetail()["data"]["name"] : movieDetail()["data"]["title"]
+                        ? location.pathname.includes("/series") ? movieDetail()["data"]["name"] : movieDetail()["data"]["title"]
                         : movieDetail()["data"]["tagline"]}
                     </h1>
                     <hr />
@@ -267,7 +274,7 @@ function MovieDetail(props) {
                     <hr />
                     <p>{movieDetail()["data"]["overview"]}</p>
                     <hr />
-                    <Show when={location.pathname==="/"} fallback={<p>Popularity: {movieDetail()["data"]["popularity"]}</p>}><p>Revenue: 💲{movieDetail()["data"]["revenue"]}</p></Show>
+                    <Show when={location.pathname.includes("/series")} fallback={<p>Revenue: 💲{movieDetail()["data"]["revenue"]}</p>}><p>Popularity: {movieDetail()["data"]["popularity"]}</p></Show>
                     <Show when={movieUrls.state === "ready"}>
                       <hr />
                       <Motion.div
@@ -313,7 +320,7 @@ function MovieDetail(props) {
                         </Show>
                       </Motion.div>
                     </Show>
-                    <Show when={movieUrls.state === "ready" && location.pathname==="/series"}>
+                    <Show when={movieUrls.state === "ready" && location.pathname.includes("/series")}>
                       <hr />
                       <Motion.div
                         initial={{
@@ -458,7 +465,7 @@ function MovieDetail(props) {
                           </Show>
                         </Motion.div>
                       </Show>
-                      <Show when={movieUrls.state === "ready" && location.pathname==="/series"}>
+                      <Show when={movieUrls.state === "ready" && location.pathname.includes("/series")}>
                       <hr />
                       <Motion.div
                         initial={{

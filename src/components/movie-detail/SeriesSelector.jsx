@@ -59,12 +59,15 @@ function SeriesSelector(props) {
             "z-index":"15"
         }}
         initial={{
-            opacity:0
+            opacity:0,
+            display: "none"
         }}
         animate={{
+            display: "inline-block",
             opacity:1
         }}
         exit={{
+            display: "none",
             opacity:0
         }}
         className="seasonContent"

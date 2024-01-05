@@ -1,5 +1,5 @@
 pub mod streaming {
-    use reqwest::Client;
+    use reqwest::{Client, Response};
     // use reqwest::ClientBuilder;
     // use crate::Value;
     use serde_json::{json, Value};
@@ -67,10 +67,18 @@ pub mod streaming {
 
         for url in base_urls {
             let url = url.replace("REPLACE", id).replace("SEASONNUMBER", season).replace("EPISODENUMBER", episode);
-            let res = client.get(&url).send().await.unwrap();
-            if res.status() == 200 {
-                urls.push(url);
+            let res = client.get(&url).send().await;
+            match res {
+                Result::Ok(val) => {
+                    if val.status() == 200 {
+                        urls.push(url);
+                    }
+                }
+                _ => {
+                    println!("Error getting url: {:?}", res);
+                }
             }
+            
         }
 
         match urls.len() {

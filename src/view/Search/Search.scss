@@ -72,21 +72,23 @@ $boxShadowColor: rgba(255, 0, 0, 0.69);
     .content {
       // background-color: rgba(0, 0, 0, 0.561);
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-rows: 1fr;
-        gap: 30px;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        // grid-template-rows: 1fr;
+        gap: 10px;
         position: absolute;
-  left: 15vw;
-  right: 15vw;
+  left: 5vw;
+  right: 5vw;
   bottom: 6vh;
+  // height: fit-content;
         top: calc(2rem + 5vh);
         z-index: 2;
-        border-radius: $borderRadius;
+        // border-radius: $borderRadius;
         overflow-y: auto;
 
         .search-results {
           
-          width: 100%;
+          min-width: 100%;
+          max-width: 100%;
             // margin: 2vh 4vw;
             // height: $topRatedHeight;
             @include centerFlex;
@@ -97,7 +99,7 @@ $boxShadowColor: rgba(255, 0, 0, 0.69);
               height: 80%;
               // max-height: 80%;
               object-fit: cover;
-              border-radius: $borderRadius;
+              // border-radius: $borderRadius;
               // margin-right: 5%;
             }
         
@@ -109,7 +111,11 @@ $boxShadowColor: rgba(255, 0, 0, 0.69);
               height: 20%;
 
               h2 {
-                font-size: 1rem;
+                text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: 1rem;
+        font-weight: 500;
               }
     
               p {

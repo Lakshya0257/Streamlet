@@ -7,7 +7,7 @@ function TopBar(){
 
     function searchClick(){
       
-        navigate('/search');
+        navigate('/series/search');
         const customEvent = new CustomEvent("search");
       document.dispatchEvent(customEvent);
         
@@ -43,18 +43,18 @@ document
         <div data-tauri-drag-region class="titlebar">
       <div class="btns">
         <div class="search-bar">
-          <input class="search-input" id='search' type="text" placeholder='Search movie here' autocomplete="off"/>
+          <input class="search-input" id='search' type="text" placeholder='Search movie or series here' autocomplete="off"/>
           <i class="fa-solid fa-magnifying-glass" onClick={searchClick} id="search-icon" style="color: #f5f5f5;"></i>
         </div>
-                <button>Playlist</button>
+                {/* <button>Playlist</button>
                 <button>Series</button>
-                <button>My List</button>
+                <button>My List</button> */}
         <div class="titlebar-button" id="titlebar-minimize">
           <i class="fa-regular fa-window-minimize" style="color: #ffffff;"></i>
         </div>
-        <div class="titlebar-button" id="titlebar-maximize">
+        {/* <div class="titlebar-button" id="titlebar-maximize">
           <i class="fa-regular fa-window-maximize"  style="color: #ffffff;"></i>
-        </div>
+        </div> */}
         <div class="titlebar-button" id="titlebar-close">
           <i class="fa-solid fa-xmark"></i>
         </div>

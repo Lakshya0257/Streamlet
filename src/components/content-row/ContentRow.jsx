@@ -129,9 +129,9 @@ function ContentRow(prop) {
                   draggable="false"
                   class="thumbnails"
                 />
-                <Show when={location.pathname==='/series'} fallback={<h1>{movie["title"]}</h1>}><h1>{movie["name"]}</h1></Show>
+                <Show when={location.pathname.includes("/series")} fallback={<h1>{movie["title"]}</h1>}><h1>{movie["name"]}</h1></Show>
                 <div className="des">
-                <Show when={location.pathname==='/series'} fallback={<p>{movie["release_date"]}</p>}><p>{movie["first_air_date"]}</p></Show>
+                <Show when={location.pathname.includes("/series")} fallback={<p>{movie["release_date"]}</p>}><p>{movie["first_air_date"]}</p></Show>
                   <div>
                     <p>❤️ {movie["popularity"]}</p>
                     <p>⭐ {movie["vote_average"]}</p>

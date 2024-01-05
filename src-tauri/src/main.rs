@@ -192,6 +192,13 @@ async fn get_data(api_type: String, id: Option<String>,page: Option<String>,seas
                     .await;
             Result::Ok(value)
         }
+        "search_series" => {
+            println!("Searching Movie...");
+            let value: Value =
+                repository::series::search_series::search::search_series(client, &id.unwrap_or(String::from("")))
+                    .await;
+            Result::Ok(value)
+        }
 
         //Getting invalid request from front-end side
         _ => Result::Ok(json!({
@@ -225,6 +232,7 @@ mod api {
         }
 
         pub mod series {
+            pub mod search_series;
             pub mod homepage;
             pub mod series_list;
             pub mod series_info;

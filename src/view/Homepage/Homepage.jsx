@@ -34,28 +34,29 @@ function Homepage() {
   //Fetching data from rust for homepage
   const fetchData = async () => {
     console.log(location.pathname);
-    if (location.pathname === "/") {
-      const response = await invoke("get_data", { apiType: "homepage" });
+    if (location.pathname.includes("/series")) {
+      const response = await invoke("get_data", { apiType: "series/homepage" });
       console.log(response);
       return response;
     } else {
-      const response = await invoke("get_data", { apiType: "series/homepage" });
+      const response = await invoke("get_data", { apiType: "homepage" });
       console.log(response);
       return response;
     }
   };
   const topRated = async () => {
-    if(location.pathname==="/"){
-      const response = await invoke("get_data", { apiType: "top_rated" });
-      //   console.log(response);
-      const res = await movie_detail(
+    if(location.pathname.includes("/series")){
+      
+      const response = await invoke("get_data", { apiType: "series/top_rated" });
+    //   console.log(response);
+      const res = await series_detail(
         response["data"]["results"][0]["id"].toString()
       );
       return res;
     }else {
-      const response = await invoke("get_data", { apiType: "series/top_rated" });
-    //   console.log(response);
-      const res = await series_detail(
+      const response = await invoke("get_data", { apiType: "top_rated" });
+      //   console.log(response);
+      const res = await movie_detail(
         response["data"]["results"][0]["id"].toString()
       );
       return res;
@@ -126,18 +127,19 @@ function Homepage() {
 //   const [dataKey, setDataKey] = createSignal(curPage());
 
 function popular(page) {
-  if (location.pathname==="/"){
-    return invoke("get_data", { apiType: "popular", page: page.toString() });
-  }else {
+  if (location.pathname.includes("/series")){
     return invoke("get_data", { apiType: "series/popular", page: page.toString() });
+  }else {
+    return invoke("get_data", { apiType: "popular", page: page.toString() });
   }
   
 }
 
-  function changePage(page) {
+  async function changePage(page) {
     console.log(page);
+    const data = await popular(parseInt(page));
     setCurrPage(parseInt(page));
-    refetch();
+    mutate(data);
   }
 
   function movieDetails(ev) {
@@ -211,7 +213,7 @@ function popular(page) {
               <div className="top-info">
                 <p>Popularity : {data()["data"]["results"][0]["popularity"]}</p>
                 <p>⭐ {data()["data"]["results"][0]["vote_average"]}</p>
-                <Show when={location.pathname==='/series'} fallback={<h1>{data()["data"]["results"][0]["original_title"]}</h1>}><h1>{data()["data"]["results"][0]["name"]}</h1></Show>
+                <Show when={location.pathname.includes("/series")} fallback={<h1>{data()["data"]["results"][0]["original_title"]}</h1>}><h1>{data()["data"]["results"][0]["name"]}</h1></Show>
                 
                 <p class="des">{data()["data"]["results"][0]["overview"]}</p>
                 <div className="btn">
@@ -247,7 +249,7 @@ function popular(page) {
                   <div className="content-div">
                     <div className="top-bar">
                       <div className="bar-content">
-                        <Show when={location.pathname==="/series"} fallback={<h2>{top_rated()["data"]["original_title"]}</h2>}><h2>{top_rated()["data"]["original_name"]}</h2></Show>
+                        <Show when={location.pathname.includes("/series")} fallback={<h2>{top_rated()["data"]["original_title"]}</h2>}><h2>{top_rated()["data"]["original_name"]}</h2></Show>
                         
                         <p>"{top_rated()["data"]["tagline"]}"</p>
                       </div>
@@ -283,7 +285,7 @@ function popular(page) {
                   opacity:1,
                 }}
                 transition={{
-                  duration:(i()+1)/3,
+                  duration:(i()+1)/6,
                   easing:"ease-in-out"
                 }}
                  className="search-results">
@@ -298,7 +300,7 @@ function popular(page) {
                     alt=""
                   />
                   <div className="content-div">
-                    <Show when={location.pathname==='/series'} fallback={<h2>{movie["title"]}</h2>}><h2>{movie["name"]}</h2></Show>
+                    <Show when={location.pathname.includes("/series")} fallback={<h2>{movie["title"]}</h2>}><h2>{movie["name"]}</h2></Show>
                     
                     <p>⭐ {movie["vote_average"]}</p>
                   </div>

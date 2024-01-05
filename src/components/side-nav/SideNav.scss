@@ -1,39 +1,45 @@
 .side-nav{
     position: fixed;
     z-index: 999;
-    left: 0;
+    left: 2vw;
     top: 0vh;
     bottom: 0;
-    width: 15vw;
+    width: 7vw;
+    background-color: black;
     // background-color: rgb(255, 7, 7);
     display: flex;
 
-    .selectors{
-        background-color: rgb(13, 13, 13);
-        height: 100%;
-        width: 30%;
-        // background-color: black;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+    // .selectors{
+    //     background-color: rgb(0, 0, 0);
+    //     height: 100%;
+    //     width: 30%;
+    //     // background-color: black;
+    //     display: flex;
+    //     flex-direction: column;
+    //     justify-content: center;
+    //     align-items: center;
 
-        h1{
+    //     h1{
             
-            color: red;
-        }
+    //         color: red;
+    //     }
 
-        img{
-            width: 2.3vw;
-            margin-bottom: 1vh;
-            height: 2.3vw;
-            border-radius: 50%;
-            object-fit: cover;
-            cursor: pointer;
-        }
-    }
+    //     img{
+    //         width: 2.3vw;
+    //         margin-bottom: 1vh;
+    //         height: 2.3vw;
+    //         border-radius: 50%;
+    //         object-fit: cover;
+    //         cursor: pointer;
+    //     }
+    // }
 
     .tabs{
+        height: 100%;
+        display: flex;
+        align-items: start;
+        justify-content: center;
+        flex-direction: column;
 
         .active{
             border-left: 4px solid rgb(255, 0, 0);
@@ -49,16 +55,16 @@
         }
         h1{
             margin-top: 2vh;
-            margin-left: 15%;
+            // margin-left: 15%;
         }
-        padding-top: 10vh;
+        // padding-top: 10vh;
         // display: flex;
         // flex-direction: column;
         // justify-content: center;
         // align-items: center;
         height: 100%;
         width: 100%;
-        background-color: rgb(13, 13, 13);
+        // background-color: rgb(13, 13, 13);
         // border-left: 1px solid rgba(40, 40, 40, 0.579);
 
         button{

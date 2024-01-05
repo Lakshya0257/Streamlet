@@ -18,12 +18,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    
+    color: rgb(125, 125, 125);
     button{
-        width: 40px;
+        
+        color: rgb(162, 162, 162);
+        // width: 40px;
         height: 60%;
-        background-color: rgb(200, 0, 0);
-        color: white;
-        border-radius: 10px;
+        border-radius: 2px;
         margin-left: 10px;
         margin-right: 10px;
     }
@@ -32,11 +34,12 @@
         width: 30px;
         height: 60%;
         background-color: transparent;
-        margin: 0 2px;
+        margin: 0 5px;
         
     }
 
     .selected{
-        background-color: rgb(200, 0, 0);
+        color: white;
+        background-color: rgb(255, 0, 0);
     }
 }

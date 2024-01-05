@@ -1,6 +1,6 @@
 .titlebar {
     height: 2.5vw;
-    background-color: rgb(13, 13, 13);
+    background-color: rgb(0, 0, 0);
     /* user-select: none; */
     display: flex;
     justify-content: space-between;
@@ -21,7 +21,7 @@
     font-size: 12px;
   }
   .titlebar-button:hover {
-    background: rgb(152, 0, 0);
+    background: rgb(255, 0, 0);
   }
   
   .titlebar h1 {

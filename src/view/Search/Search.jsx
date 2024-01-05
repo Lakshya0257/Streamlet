@@ -13,6 +13,7 @@ import {
   For,
 } from "solid-js";
 import { invoke } from "@tauri-apps/api";
+import { useLocation } from "@solidjs/router";
 function Search() {
   const [searchResult, setSearchResult] = createSignal({});
   const [clicked, setClicked] = createSignal(false);
@@ -76,21 +77,30 @@ function Search() {
     setClicked(true);
   }
 
-
-
-
+  const location = useLocation();
   async function searchApi() {
     setCurrentState("ongoing");
     console.log("searching...");
     const search = document.getElementById("search");
     var inputValue = search.value;
-    const response = await invoke("get_data", {
-      apiType: "search_movie",
-      id: inputValue,
-    });
-    setCurrentState("ready");
-    setSearchResult(response);
-    console.log(searchResult());
+    console.log(location.pathname);
+    if( location.pathname.includes("/series")){
+      const response = await invoke("get_data", {
+        apiType: "search_series",
+        id: inputValue,
+      });
+      setCurrentState("ready");
+      setSearchResult(response);
+      console.log(searchResult());
+    }else{
+      const response = await invoke("get_data", {
+        apiType: "search_movie",
+        id: inputValue,
+      });
+      setCurrentState("ready");
+      setSearchResult(response);
+      console.log(searchResult());
+    }
   }
   return (
     <>
@@ -122,15 +132,15 @@ function Search() {
                   <img  id={movie['id']}
                   onclick={movieDetails}
                     src={
-                      movie["backdrop_path"] === null
+                      movie["poster_path"] === null
                         ? "https://t4.ftcdn.net/jpg/02/86/32/31/360_F_286323187_mDk3N4nGDaPkUmhNcdBe3RjSOfKqx4nZ.jpg"
                         : "https://image.tmdb.org/t/p/w500" +
-                          movie["backdrop_path"]
+                          movie["poster_path"]
                     } 
                     alt=""
                   />
                   <div className="content-div">
-                    <h2>{movie["title"]}</h2>
+                    <h2>{movie["name"]}</h2>
                     <p>⭐ {movie["vote_average"]}</p>
                   </div>
                 </Motion.div>
